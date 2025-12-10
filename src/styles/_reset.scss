@@ -1,0 +1,15 @@
+// 62.5% de 16px = 10px, então 1rem = 10px
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

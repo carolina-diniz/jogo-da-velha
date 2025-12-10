@@ -1,0 +1,30 @@
+@use 'sass:map';
+@use 'variables' as *;
+
+@function font($key, $value) {
+  @return map.get(map.get($font, $key), $value);
+}
+
+@function color($key, $value) {
+  @return map.get(map.get($color, $key), $value);
+}
+
+@function spacing($key) {
+  @return map.get($spacing, $key);
+}
+
+@function border($key, $value) {
+  @return map.get(map.get($border, $key), $value);
+}
+
+@function icon($key) {
+  @return map.get($icon, $key);
+}
+
+@function button($key) {
+  @return map.get($button, $key);
+}
+
+@function input($key) {
+  @return map.get($input, $key);
+}

@@ -11,7 +11,11 @@ module.exports = {
     'subject-full-stop': [2, 'never', '.'],
     'scope-case': [2, 'always', 'lower-case'],
     'scope-empty': [2, 'never'],
-    'scope-enum': [2, 'always', ['*', 'core', 'core/routes', 'pages']],
+    'scope-enum': [
+      2,
+      'always',
+      ['*', 'core', 'core/routes', 'pages', 'pages/game', 'pages/home', 'styles'],
+    ],
     'type-case': [2, 'always', 'lower-case'],
     'type-empty': [2, 'never'],
     'type-enum': [
