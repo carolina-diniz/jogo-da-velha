@@ -14,7 +14,7 @@ module.exports = {
     'scope-enum': [
       2,
       'always',
-      ['*', 'core', 'core/routes', 'pages', 'pages/game', 'pages/home', 'styles'],
+      ['*', 'assets', 'core', 'core/routes', 'pages', 'pages/game', 'pages/home', 'styles'],
     ],
     'type-case': [2, 'always', 'lower-case'],
     'type-empty': [2, 'never'],
