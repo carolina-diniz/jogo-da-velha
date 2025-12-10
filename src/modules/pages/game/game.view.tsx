@@ -1,3 +1,7 @@
 export function GameView() {
-  return <></>;
+  return (
+    <>
+      <h1>game</h1>
+    </>
+  );
 }

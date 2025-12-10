@@ -1,13 +1,13 @@
 import { createElement, type JSX } from 'react';
 import { Route } from 'react-router-dom';
 
-export interface RouteConfig {
-  path: string;
-  element: JSX.Element;
+interface Module {
+  default?: RouteConfig;
 }
 
-interface Module {
-  default?: RouteConfig | 'object';
+export interface RouteConfig {
+  path: string;
+  element: () => JSX.Element;
 }
 
 export const RoutesConfig = {
@@ -22,10 +22,12 @@ export const RoutesConfig = {
       try {
         const module = routeModules[path] as Module;
 
-        if (module.default && module.default === 'object') {
-          const route = module.default as unknown as RouteConfig;
+        if (module.default) {
+          const route = module.default as RouteConfig;
 
-          routes.push(createElement(Route, { ...route }));
+          const element = createElement(Route, { ...route, element: route.element() });
+
+          routes.push(element);
         }
       } catch (error) {
         console.warn('error loading route module:', path, error);
