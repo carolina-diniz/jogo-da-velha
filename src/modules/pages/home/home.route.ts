@@ -3,5 +3,5 @@ import { HomePage } from './home.page';
 
 export default {
   path: '/',
-  element: HomePage(),
+  element: HomePage,
 } as RouteConfig;

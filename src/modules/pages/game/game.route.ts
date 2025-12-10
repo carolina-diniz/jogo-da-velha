@@ -3,5 +3,5 @@ import { GamePage } from './game.page';
 
 export default {
   path: '/game',
-  element: GamePage(),
+  element: GamePage,
 } as RouteConfig;

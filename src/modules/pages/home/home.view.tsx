@@ -1,3 +1,7 @@
 export function HomeView() {
-  return <></>;
+  return (
+    <>
+      <h1>home</h1>
+    </>
+  );
 }
