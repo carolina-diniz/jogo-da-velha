@@ -27,7 +27,8 @@
     /* Misc */
     "paths": {
       "~core": ["./src/core/index.ts"],
-      "~styles": ["./src/styles/*"]
+      "~styles/*": ["./src/styles/*"],
+      "~assets/*": ["./src/assets/*"]
     }
   },
   "include": ["src"]

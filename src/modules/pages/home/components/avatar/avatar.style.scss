@@ -1,0 +1,26 @@
+@use '~styles' as *;
+
+.avatar__container {
+  position: relative;
+  width: 20rem;
+  height: 20rem;
+  margin: border(width, medium);
+  background-color: color(red, base);
+  border-radius: border(radius, circular);
+  border: solid border(width, medium) color(white, base);
+  box-shadow: 0 0 0 border(width, medium) color(purple, 20);
+}
+
+.avatar__btn-edit {
+  position: absolute;
+  width: spacing(10);
+  height: spacing(10);
+  bottom: 1.5rem;
+  right: 0;
+  background-color: color(white, base);
+  border-radius: border(radius, circular);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
