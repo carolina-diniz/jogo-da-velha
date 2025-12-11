@@ -1,0 +1,9 @@
+@use '~styles' as *;
+
+.background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(color(purple, 10), color(blue, 10));
+  z-index: -100000000;
+}

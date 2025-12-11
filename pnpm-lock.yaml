@@ -17,23 +17,23 @@ importers:
         specifier: 7.10.1
         version: 7.10.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       scss:
-        specifier: ^0.2.4
+        specifier: 0.2.4
         version: 0.2.4
     devDependencies:
       '@commitlint/cli':
-        specifier: ^20.2.0
+        specifier: 20.2.0
         version: 20.2.0(@types/node@24.10.1)(typescript@5.9.3)
       '@commitlint/config-conventional':
-        specifier: ^20.2.0
+        specifier: 20.2.0
         version: 20.2.0
       '@eslint/css':
-        specifier: ^0.14.1
+        specifier: 0.14.1
         version: 0.14.1
       '@eslint/js':
         specifier: 9.39.1
         version: 9.39.1
       '@eslint/json':
-        specifier: ^0.14.0
+        specifier: 0.14.0
         version: 0.14.0
       '@types/node':
         specifier: 24.10.1
@@ -51,7 +51,7 @@ importers:
         specifier: 9.39.1
         version: 9.39.1(jiti@2.6.1)
       eslint-plugin-react:
-        specifier: ^7.37.5
+        specifier: 7.37.5
         version: 7.37.5(eslint@9.39.1(jiti@2.6.1))
       eslint-plugin-react-hooks:
         specifier: 7.0.1
@@ -63,19 +63,19 @@ importers:
         specifier: 16.5.0
         version: 16.5.0
       husky:
-        specifier: ^9.1.7
+        specifier: 9.1.7
         version: 9.1.7
       prettier:
-        specifier: ^3.7.4
+        specifier: 3.7.4
         version: 3.7.4
       pretty-quick:
-        specifier: ^4.2.2
+        specifier: 4.2.2
         version: 4.2.2(prettier@3.7.4)
       sass-embedded:
-        specifier: ^1.95.1
+        specifier: 1.95.1
         version: 1.95.1
       scss-reset:
-        specifier: ^1.4.6
+        specifier: 1.4.6
         version: 1.4.6
       typescript:
         specifier: 5.9.3
