@@ -1,9 +1,10 @@
 import type { JSX } from 'react';
+import { RoomCode } from './components';
 
 export function GameView(): JSX.Element {
   return (
     <>
-      <h1>game</h1>
+      <RoomCode />
     </>
   );
 }

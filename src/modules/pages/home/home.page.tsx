@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { Background } from '../../../core/background/background.component';
+import { Background } from '~core';
 import { HomeView } from './home.view';
 
 export function HomePage(): JSX.Element {
