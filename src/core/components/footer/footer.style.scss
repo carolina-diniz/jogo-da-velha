@@ -1,0 +1,21 @@
+@use '~styles' as *;
+
+.footer__content {
+  position: fixed;
+  display: flex;
+  bottom: spacing(3);
+  left: 50%;
+  gap: spacing(3);
+  align-items: center;
+  color: color(white, 30);
+  transform: translateX(-50%);
+}
+
+.footer__logo {
+  font-size: font(size, 60);
+  font-weight: font(weight, semi-bold);
+}
+
+.footer__text {
+  font-size: font(size, 20);
+}
