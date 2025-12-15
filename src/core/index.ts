@@ -1,2 +1,2 @@
-export * from './background';
+export * from './components';
 export * from './routes';
