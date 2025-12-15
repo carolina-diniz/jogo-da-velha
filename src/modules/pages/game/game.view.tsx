@@ -1,10 +1,11 @@
 import type { JSX } from 'react';
-import { RoomCode } from './components';
+import { InfoMenu, RoomCode } from './components';
 
 export function GameView(): JSX.Element {
   return (
     <>
       <RoomCode />
+      <InfoMenu />
     </>
   );
 }

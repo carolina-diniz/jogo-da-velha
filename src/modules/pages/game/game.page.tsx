@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
-import { GameView } from './game.view';
 import { Background } from '~core';
+import { GameView } from './game.view';
 
 export function GamePage(): JSX.Element {
   return (

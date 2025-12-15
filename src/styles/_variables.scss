@@ -3,8 +3,15 @@ $font: (
     primary: 'Inter',
   ),
   weight: (
-    regular: 400,
+    thin: 100,
+    extra-light: 200,
+    light: 300,
+    normal: 400,
+    medium: 500,
+    semi-bold: 600,
     bold: 700,
+    extra-bold: 800,
+    black: 900,
   ),
   size: (
     1: 0.4rem,
@@ -65,10 +72,13 @@ $color: (
   ),
   blue: (
     10: #1b0467,
+    20: #071381,
+    30: #2d259d,
   ),
   purple: (
-    10: #5c40b7,
+    10: #5c5cef,
     20: #302d94,
+    30: #cccbff,
   ),
   red: (
     base: #ef6885,
