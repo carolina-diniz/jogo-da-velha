@@ -9,6 +9,22 @@
   height: auto;
 }
 
+.home__title {
+  $fontAndBorderColor: color(white, 70);
+  $textStrokeColor: color(blue, 10);
+  $textStrokeSize: border(width, heavy);
+
+  font-size: font(size, 120);
+  font-weight: font(weight, bold);
+  color: color(yellow, base);
+  line-height: 95%;
+  letter-spacing: -4%;
+
+  -webkit-text-stroke: $textStrokeSize $textStrokeColor;
+  paint-order: stroke fill;
+  filter: drop-shadow(0 0.4rem 0 $textStrokeColor);
+}
+
 .home__divider {
   width: spacing(2);
   height: 33.4rem; // Mudar quando tiver os contents
