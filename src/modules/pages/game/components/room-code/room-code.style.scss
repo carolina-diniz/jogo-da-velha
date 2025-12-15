@@ -1,0 +1,33 @@
+@use '~styles' as *;
+
+$fontAndBorderColor: color(white, 70);
+$textStrokeColor: color(blue, 10);
+$textStrokeSize: border(width, medium);
+
+.room-code__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.room-code__title {
+  font-size: font(size, 90);
+  font-weight: font(weight, bold);
+  color: color(yellow, base);
+  margin-bottom: 1.2rem;
+
+  -webkit-text-stroke: $textStrokeSize $textStrokeColor;
+  paint-order: stroke fill;
+  filter: drop-shadow(0 0.2rem 0 $textStrokeColor);
+}
+
+.room-code__code {
+  width: 25rem;
+  padding: 0.8rem 6rem;
+  font-size: font(size, 90);
+  font-weight: font(weight, bold);
+  text-align: center;
+  color: $fontAndBorderColor;
+  border: solid border(width, light) $fontAndBorderColor;
+  border-radius: border(radius, xlarge);
+}
