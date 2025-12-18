@@ -4,11 +4,11 @@ import './player.style.scss';
 interface PlayerProps {
   name: string;
   wins: number;
-  isSelected: boolean;
+  isSelected?: boolean;
 }
 
 export function Player(props: PlayerProps): JSX.Element {
-  const { name, wins, isSelected } = props;
+  const { name, wins, isSelected = false } = props;
 
   return (
     <div className={isSelected ? 'player__container selected' : 'player__container'}>
@@ -16,8 +16,8 @@ export function Player(props: PlayerProps): JSX.Element {
         <img src="" alt="" />
       </div>
       <p className="player__name">{name}</p>
-      <div className="player__wins-container">
-        <span className="player__wins">{wins}</span>
+      <div className="player__wins-pill">
+        <span className="player__wins-count">{wins}</span>
       </div>
     </div>
   );
