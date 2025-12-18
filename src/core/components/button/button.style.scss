@@ -1,0 +1,44 @@
+@use '~styles' as *;
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 29rem;
+  height: 4.6rem;
+
+  background-color: color(yellow, base);
+  border-radius: border(radius, circular);
+  border: solid border(width, medium) color(purple, 20);
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: color(yellow, 10);
+  }
+
+  &.secundary {
+    background-color: color(purple, 30);
+
+    &:hover {
+      background-color: color(purple, 40);
+    }
+  }
+}
+
+.button__text {
+  $textStrokeColor: color(purple, 20);
+  $textStrokeSize: border(width, medium);
+
+  font-size: font(size, 50);
+  font-weight: font(weight, medium);
+  color: color(white, base);
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-text-stroke: $textStrokeSize $textStrokeColor;
+  paint-order: stroke fill;
+}
