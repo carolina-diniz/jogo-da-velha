@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { Button } from '~core';
 import { Avatar } from './components';
-import { UserNameInput } from './components/input/nomeUsuarioInput.component';
+import { UserNameInput } from './components/user-name-input/user-name-input.component';
 import './home.style.scss';
 
 export function HomeView(): JSX.Element {
