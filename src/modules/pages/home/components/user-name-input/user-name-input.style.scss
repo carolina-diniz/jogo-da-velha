@@ -1,0 +1,18 @@
+@use '~styles' as *;
+
+.userName {
+  border: solid width(border(width, light)) color(white, 50);
+  background-color: transparent;
+  padding: spacing(3);
+  border-radius: border(radius, medium);
+  font-weight: font(weight, bold);
+  width: 22.6rem;
+  height: input(1);
+  color: color(white, base);
+  font-size: font(size, 60);
+}
+
+input::placeholder {
+  font-size: font(size, 60);
+  color: color(white, 50);
+}
