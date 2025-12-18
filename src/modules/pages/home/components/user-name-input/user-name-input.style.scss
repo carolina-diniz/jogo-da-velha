@@ -1,14 +1,13 @@
 @use '~styles' as *;
 
 .userName {
-  border: solid 2px color(white, 50);
+  border: solid width(border(width, light)) color(white, 50);
   background-color: transparent;
   padding: spacing(3);
   border-radius: border(radius, medium);
   font-weight: font(weight, bold);
-  width: 226px;
+  width: 22.6rem;
   height: input(1);
-  opacity: 0.8;
   color: color(white, base);
 }
 
