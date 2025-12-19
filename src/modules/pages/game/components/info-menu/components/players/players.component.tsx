@@ -16,8 +16,8 @@ export function Player(props: PlayerProps): JSX.Element {
         <img src="" alt="" />
       </div>
       <p className="player__name">{name}</p>
-      <div className="player__wins-container">
-        <span className="player__wins">{wins}</span>
+      <div className="player__wins-pill">
+        <span className="player__wins-count">{wins}</span>
       </div>
     </div>
   );
