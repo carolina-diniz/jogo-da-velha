@@ -25,7 +25,9 @@
 .menu-info__box {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: fit-content;
+  height: 23.2rem;
   gap: spacing(4);
   padding: spacing(8) spacing(2) spacing(5);
 

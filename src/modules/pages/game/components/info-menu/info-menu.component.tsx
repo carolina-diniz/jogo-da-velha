@@ -30,7 +30,7 @@ export function InfoMenu(): JSX.Element {
       </div>
       <Button>REGRAS</Button>
       <Button>TEMAS</Button>
-      <Button>IDIOMAS</Button>
+      <Button variant>IDIOMAS</Button>
     </div>
   );
 }

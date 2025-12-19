@@ -4,11 +4,11 @@ import './player.style.scss';
 interface PlayerProps {
   name: string;
   wins: number;
-  isSelected?: boolean;
+  isSelected: boolean;
 }
 
 export function Player(props: PlayerProps): JSX.Element {
-  const { name, wins, isSelected = false } = props;
+  const { name, wins, isSelected } = props;
 
   return (
     <div className={isSelected ? 'player__container selected' : 'player__container'}>
