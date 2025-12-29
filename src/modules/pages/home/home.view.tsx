@@ -1,6 +1,5 @@
 import type { JSX } from 'react';
-import { Avatar } from './components';
-import { UserNameInput } from './components/user-name-input/user-name-input.component';
+import { Avatar, NameInput } from './components';
 import './home.style.scss';
 
 export function HomeView(): JSX.Element {
@@ -9,7 +8,7 @@ export function HomeView(): JSX.Element {
       <div className="home__menu-content">
         <h1 className="home__title">JOGO DA VELHA</h1>
         <Avatar />
-        <UserNameInput />
+        <NameInput />
         <div className="home__divider"></div>
       </div>
     </>
