@@ -74,12 +74,14 @@ $color: (
     10: #1b0467,
     20: #071381,
     30: #2d259d,
+    40: #36fdd8,
   ),
   purple: (
     10: #5c5cef,
     20: #302d94,
     30: #cccbff,
     40: #deddfd,
+    50: #423bc0,
   ),
   red: (
     base: #ef6885,
@@ -121,6 +123,7 @@ $border: (
     large: 1.2rem,
     xlarge: 1.6rem,
     xxlarge: 2.4rem,
+    xxxlarge: 3.2rem,
     circular: 1000rem,
   ),
 );
@@ -135,7 +138,7 @@ $icon: (
 );
 
 $button: (
-  1: 4.8rem,
+  1: 4.6rem,
   2: 5.6rem,
   3: 6.4rem,
 );

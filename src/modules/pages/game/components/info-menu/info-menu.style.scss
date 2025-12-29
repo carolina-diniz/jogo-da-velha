@@ -1,0 +1,58 @@
+@use '~styles' as *;
+
+.menu-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing(5);
+  padding: spacing(5) spacing(5) spacing(10);
+  width: fit-content;
+  height: 58rem;
+  background-color: color(purple, 10);
+  border-radius: border(radius, xxxlarge);
+}
+
+.menu-info__title {
+  font-size: font(size, 70);
+  font-weight: font(weight, bold);
+  letter-spacing: 0.1rem;
+  color: color(blue, 40);
+
+  -webkit-text-stroke: border(width, medium) color(black, 40);
+  paint-order: stroke fill;
+}
+
+.menu-info__box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: fit-content;
+  height: 23.2rem;
+  gap: spacing(4);
+  padding: spacing(8) spacing(2) spacing(5);
+
+  background-color: color(purple, 50);
+  border-radius: border(radius, medium);
+  border: solid border(width, light) color(purple, 20);
+}
+
+.menu-info__draw {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: spacing(8);
+
+  font-size: font(size, 60);
+  font-weight: font(weight, semi-bold);
+  color: color(white, base);
+
+  p {
+    width: calc(15rem + spacing(8) + spacing(2) * 2);
+  }
+
+  span {
+    width: spacing(14);
+    text-align: center;
+  }
+}

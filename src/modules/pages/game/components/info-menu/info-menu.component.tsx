@@ -1,16 +1,36 @@
 import type { JSX } from 'react';
-import { Button, ButtonVariant } from '~core';
-import { Player } from './components/players';
+import { Button } from '~core';
+import { Player } from './components';
+import './info-menu.style.scss';
 
 export function InfoMenu(): JSX.Element {
+  const players = [
+    { id: '1', name: 'Kaworii', wins: 3 },
+    { id: '2', name: 'Felipe', wins: 9 },
+  ];
+  const turn = { id: '1' };
+  const draw = 0;
+
   return (
-    <>
-      <Player name="Player 1" wins={9} isSelected={false} />
-      <Player name="Player 2" wins={999} isSelected={true} />
+    <div className="menu-info">
+      <p className="menu-info__title">JOGADORES {players.length}/2</p>
+      <div className="menu-info__box">
+        {players.map((player) => (
+          <Player
+            name={player.name}
+            wins={player.wins}
+            key={player.id}
+            isSelected={turn.id === player.id}
+          />
+        ))}
+        <div className="menu-info__draw">
+          <p>Empates</p>
+          <span>{draw}</span>
+        </div>
+      </div>
       <Button>REGRAS</Button>
       <Button>TEMAS</Button>
-      <Button>IDIOMAS</Button>
-      <Button variant={ButtonVariant.Secundary}>VOLTAR</Button>
-    </>
+      <Button variant>IDIOMAS</Button>
+    </div>
   );
 }
