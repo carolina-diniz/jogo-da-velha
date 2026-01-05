@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
-import './input.style.scss';
+import './name-input.style.scss';
 
-export function UserNameInput(): JSX.Element {
+export function NameInput(): JSX.Element {
   return <input className="userName" type="text" placeholder="Anonimo321" />;
 }

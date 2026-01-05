@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes } from 'react-router-dom';
-import { RoutesConfig } from '~core';
+import { RoutesConfig, SocketProvider } from '~core';
 import './main.scss';
 
 function main(): void {
@@ -9,9 +9,11 @@ function main(): void {
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <BrowserRouter>
-        <Routes>{routes}</Routes>
-      </BrowserRouter>
+      <SocketProvider>
+        <BrowserRouter>
+          <Routes>{routes}</Routes>
+        </BrowserRouter>
+      </SocketProvider>
     </StrictMode>,
   );
 }
