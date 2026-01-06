@@ -1,7 +1,7 @@
 @use '~styles' as *;
 
 .userName {
-  border: solid width(border(width, light)) color(white, 50);
+  border: solid border(width, light) color(white, 50);
   background-color: transparent;
   padding: spacing(3);
   border-radius: border(radius, medium);
