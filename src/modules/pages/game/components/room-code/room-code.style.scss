@@ -30,4 +30,5 @@ $textStrokeSize: border(width, medium);
   color: $fontAndBorderColor;
   border: solid border(width, light) $fontAndBorderColor;
   border-radius: border(radius, xlarge);
+  cursor: pointer;
 }

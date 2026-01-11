@@ -1,0 +1,31 @@
+@use '~styles' as *;
+
+.block__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: color(blue, 30);
+  border-radius: border(radius, medium);
+  box-shadow: inset 0 0 0 border(width, thin) color(blue, 50);
+  min-width: 10rem;
+  min-height: 10rem;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: inset 0 0 0 border(width, medium) color(purple, 30);
+  }
+
+  &.invalid {
+    box-shadow: inset 0 0 0 border(width, medium) color(red, base);
+  }
+
+  &.highlighted {
+    box-shadow: inset 0 0 0 border(width, medium) color(blue, 40);
+  }
+}
+
+img {
+  width: 70%;
+  aspect-ratio: 1;
+  user-select: none;
+}
