@@ -1,5 +1,6 @@
 import type { JSX } from 'react';
 import { Avatar, NameInput } from './components';
+import { HomeButtons, Join, Language } from './components/buttons';
 import './home.style.scss';
 
 export function HomeView(): JSX.Element {
@@ -13,6 +14,11 @@ export function HomeView(): JSX.Element {
             <NameInput />
           </div>
           <div className="home__separator"></div>
+          <div>
+            <HomeButtons />
+            <Join />
+            <Language />
+          </div>
         </div>
       </div>
     </div>
