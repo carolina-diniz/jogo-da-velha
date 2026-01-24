@@ -1,18 +1,30 @@
 @use '~styles' as *;
 
-.home__menu-content {
+.home__wrapper {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  width: auto;
-  height: auto;
+  height: 100vh;
+  background-color: color(purple, base);
+}
+
+.home__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 85.8rem;
+  height: 59.8rem;
+  background-color: #5c5cef;
+  border-radius: 4.2rem;
 }
 
 .home__title {
   $fontAndBorderColor: color(white, 70);
   $textStrokeColor: color(blue, 10);
   $textStrokeSize: border(width, heavy);
+
+  margin-bottom: 4rem;
 
   font-size: font(size, 120);
   font-weight: font(weight, bold);
@@ -25,9 +37,29 @@
   filter: drop-shadow(0 0.4rem 0 $textStrokeColor);
 }
 
-.home__divider {
+.home__form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #423bc0;
+  width: 76rem;
+  height: 39.6rem;
+  border-radius: 0.8rem;
+}
+
+.home__form-fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3.2rem;
+  height: 100%;
+}
+
+.home__separator {
   width: spacing(2);
-  height: 33.4rem; // Mudar quando tiver os contents
+  height: 33.4rem;
   border-radius: border(radius, circular);
   background-color: color(purple, 10);
 }
