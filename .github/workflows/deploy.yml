@@ -1,35 +1,62 @@
-name: Deploy Jogo da Velha
+name: 🚀 Deploy Jogo da Velha
 
 on:
   push:
     branches: [main]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: self-hosted
+
     steps:
-      - name: Executar comandos na VM via SSH
+      # 1. Pega o código do GitHub e coloca no Runner
+      - name: 📂 Checkout do Código
+        uses: actions/checkout@v4
+
+      # 2. Prepara o Node.js (baixa o binário automaticamente)
+      - name: 🟢 Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.1'
+
+      # 3. Instala o pnpm (usando o npm que o setup-node acabou de baixar)
+      - name: 📦 Instalar PNPM
+        run: npm install -g pnpm@10.28.1
+
+      # 4. Instala as dependências e gera os arquivos finais (pasta /dist)
+      - name: 🛠️ Build do Projeto (Vite)
+        run: |
+          echo "Iniciando instalação das dependências..."
+          pnpm install
+          echo "Gerando build de produção..."
+          pnpm build
+          echo "✅ Build finalizado com sucesso!"
+
+      # 5. Envia apenas os arquivos necessários para a VM de produção
+      - name: 🚚 Deploy via RSync (Sincronização Limpa)
         env:
           VM_IP: ${{ secrets.VM_IP }}
           VM_USER: ${{ secrets.VM_USER }}
         run: |
-          # Passamos as variáveis de IP e USER para o comando SSH
-          ssh -o StrictHostKeyChecking=no $VM_USER@$VM_IP << 'EOF'
-            # 1. Carrega o ambiente do NVM (essencial para achar o node e pnpm)
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          echo "Conectando à VM de produção em $VM_IP..."
 
-            # 2. Vai para a pasta do projeto
-            cd ~/github/fe/jogo-da-velha/
+          # Trocamos -az por -rlptzD
+          # -r: recursivo
+          # -l: preserva links simbólicos
+          # -p: preserva permissões de leitura/escrita
+          # -t: preserva data/hora
+          # -z: compressão
+          # --no-owner e --no-group: A MÁGICA! Ignora erro de permissão de dono/grupo
+          # Mudamos para -rlpzD (removemos o 't' de times)
+          # Adicionamos --no-t para garantir que ele não tente mexer em datas
 
-            # 3. Sincroniza o Git
-            git fetch --all
-            git reset --hard origin/main
+          rsync -rlpzD -e "ssh -o StrictHostKeyChecking=no" \
+            --no-owner --no-group --no-t \
+            --delete \
+            dist/ $VM_USER@$VM_IP:/var/www/jogo-da-velha/
 
-            # 4. Instala as dependências
-            pnpm install
+          echo "🚀 Deploy realizado com sucesso!"
 
-            # 5. Build do projeto
-            pnpm run build
-
-          EOF
+      # 6. Feedback visual final no log do GitHub
+      - name: 🎉 Sucesso!
+        run: echo "O site já está atualizado e rodando via Nginx!"
