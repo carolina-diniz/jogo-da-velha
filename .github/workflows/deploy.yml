@@ -1,0 +1,23 @@
+name: Deploy Jogo da Velha
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Executar comandos na VM via SSH
+        run: |
+          ssh dev@192.168.1.174 << 'EOF'
+            cd ~/github/fe/jogo-da-velha/
+            git pull
+            pnpm install
+
+            # Mata a sessão do screen se ela existir
+            screen -S jogo -X quit || true
+
+            # Cria uma nova sessão em background e roda o dev
+            screen -dmS jogo pnpm run dev --host --port=5174
+          EOF
