@@ -13,10 +13,23 @@ jobs:
           VM_IP: ${{ secrets.VM_IP }}
           VM_USER: ${{ secrets.VM_USER }}
         run: |
+          # Passamos as variáveis de IP e USER para o comando SSH
           ssh -o StrictHostKeyChecking=no $VM_USER@$VM_IP << 'EOF'
+            # 1. Carrega o ambiente do NVM (essencial para achar o node e pnpm)
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+            # 2. Vai para a pasta do projeto
             cd ~/github/fe/jogo-da-velha/
-            git pull
+
+            # 3. Sincroniza o Git
+            git fetch --all
+            git reset --hard origin/main
+
+            # 4. Instala as dependências
             pnpm install
-            screen -S jogo -X quit || true
-            screen -dmS jogo pnpm run dev --host --port=5174
+
+            # 5. Build do projeto
+            pnpm run build
+
           EOF
