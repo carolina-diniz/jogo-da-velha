@@ -12,4 +12,8 @@ export default defineConfig({
       '~assets': resolve(__dirname, 'src/assets'),
     },
   },
+  server: {
+    host: true,
+    allowedHosts: ['jogo.kaworii.com.br'],
+  },
 });
