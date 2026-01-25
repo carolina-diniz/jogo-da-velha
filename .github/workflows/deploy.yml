@@ -9,15 +9,14 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Executar comandos na VM via SSH
+        env:
+          VM_IP: ${{ secrets.VM_IP }}
+          VM_USER: ${{ secrets.VM_USER }}
         run: |
-          ssh ${{ secrets.VM_USER}}@{{ secrets.VM_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no $VM_USER@$VM_IP << 'EOF'
             cd ~/github/fe/jogo-da-velha/
             git pull
             pnpm install
-
-            # Mata a sessão do screen se ela existir
             screen -S jogo -X quit || true
-
-            # Cria uma nova sessão em background e roda o dev
             screen -dmS jogo pnpm run dev --host --port=5174
           EOF
