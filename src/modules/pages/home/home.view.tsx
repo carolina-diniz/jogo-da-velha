@@ -4,13 +4,17 @@ import './home.style.scss';
 
 export function HomeView(): JSX.Element {
   return (
-    <>
-      <div className="home__menu-content">
+    <div className="home__wrapper">
+      <div className="home__card">
         <h1 className="home__title">JOGO DA VELHA</h1>
-        <Avatar />
-        <NameInput />
-        <div className="home__divider"></div>
+        <div className="home__form">
+          <div className="home__form-fields">
+            <Avatar />
+            <NameInput />
+          </div>
+          <div className="home__separator"></div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
