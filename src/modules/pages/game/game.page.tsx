@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { Background } from '~core';
+import { Background, Footer } from '~core';
 import { GameView } from './game.view';
 
 export function GamePage(): JSX.Element {
@@ -7,6 +7,7 @@ export function GamePage(): JSX.Element {
     <>
       <Background />
       <GameView />
+      <Footer />
     </>
   );
 }
