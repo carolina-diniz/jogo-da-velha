@@ -1,18 +1,18 @@
 @use '~styles' as *;
 
-.menu-info {
+.info-menu {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: spacing(5);
   padding: spacing(5) spacing(5) spacing(10);
   width: fit-content;
-  height: 58rem;
+  height: 60.1rem;
   background-color: color(purple, 10);
   border-radius: border(radius, xxxlarge);
 }
 
-.menu-info__title {
+.info-menu__title {
   font-size: font(size, 70);
   font-weight: font(weight, bold);
   letter-spacing: 0.1rem;
@@ -22,7 +22,7 @@
   paint-order: stroke fill;
 }
 
-.menu-info__box {
+.info-menu__box {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -36,7 +36,7 @@
   border: solid border(width, light) color(purple, 20);
 }
 
-.menu-info__draw {
+.info-menu__draw {
   display: flex;
   justify-content: center;
   align-items: center;
