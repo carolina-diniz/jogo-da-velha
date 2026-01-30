@@ -21,13 +21,16 @@ export function Board(): JSX.Element {
   const title = 'VEZ DE: Jogador 1';
 
   return (
-    <div className="board__container">
-      <h1 className="board__title">{title}</h1>
-      <div className="board__wrapper">
-        <div className="board__grid">
-          {table.map((block, rowIndex) => (
-            <Block key={rowIndex} value={block.value} isHighlighted={block.isHighlighted} />
-          ))}
+    <div className="board">
+      <h1 className="board__game-title">JOGO DA VELHA</h1>
+      <div className="board__container">
+        <h1 className="board__title">{title}</h1>
+        <div className="board__wrapper">
+          <div className="board__grid">
+            {table.map((block, rowIndex) => (
+              <Block key={rowIndex} value={block.value} isHighlighted={block.isHighlighted} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
