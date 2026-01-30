@@ -1,24 +1,24 @@
-import cachorro from '~assets/avatar/cachorro.png';
-import coelho from '~assets/avatar/coelho.png';
-import gato from '~assets/avatar/gato.png';
-import girafa from '~assets/avatar/girafa.png';
-import leao from '~assets/avatar/leao.png';
+import cat from '~assets/avatar/cat.png';
+import dog from '~assets/avatar/dog.png';
+import fox from '~assets/avatar/fox.png';
+import giraffe from '~assets/avatar/giraffe.png';
+import lion from '~assets/avatar/lion.png';
 import panda from '~assets/avatar/panda.png';
-import pinguim from '~assets/avatar/pinguim.png';
-import raposa from '~assets/avatar/raposa.png';
-import tigre from '~assets/avatar/tigre.png';
+import penguin from '~assets/avatar/penguin.png';
+import rabbit from '~assets/avatar/rabbit.png';
+import tiger from '~assets/avatar/tiger.png';
 
 export function getAvatarImage(avatarName: string): string {
   const avatars: Record<string, string> = {
-    cachorro,
-    coelho,
-    gato,
-    girafa,
-    leao,
+    dog,
+    rabbit,
+    cat,
+    giraffe,
+    lion,
     panda,
-    pinguim,
-    raposa,
-    tigre,
+    penguin,
+    fox,
+    tiger,
   };
 
   return avatars[avatarName];

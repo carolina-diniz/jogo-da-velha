@@ -6,7 +6,7 @@ import './info-menu.style.scss';
 
 export function InfoMenu(): JSX.Element {
   const players = [
-    { id: '1', name: 'Kaworii', wins: 3, avatarUrl: 'gato' },
+    { id: '1', name: 'Kaworii', wins: 3, avatarUrl: 'cat' },
     { id: '2', name: 'Felipe', wins: 9, avatarUrl: 'panda' },
   ];
   const turn = { id: '1' };
