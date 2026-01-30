@@ -6,8 +6,8 @@ import './info-menu.style.scss';
 
 export function InfoMenu(): JSX.Element {
   const players = [
-    { id: '1', name: 'Kaworii', wins: 3 },
-    { id: '2', name: 'Felipe', wins: 9 },
+    { id: '1', name: 'Kaworii', wins: 3, avatarUrl: 'gato' },
+    { id: '2', name: 'Felipe', wins: 9, avatarUrl: 'panda' },
   ];
   const turn = { id: '1' };
   const draw = 0;
@@ -22,6 +22,7 @@ export function InfoMenu(): JSX.Element {
             <Player
               name={player.name}
               wins={player.wins}
+              avatarUrl={player.avatarUrl}
               key={player.id}
               isSelected={turn.id === player.id}
             />
