@@ -1,5 +1,12 @@
 @use '~styles' as *;
 
+.home-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(3);
+  align-items: center;
+}
+
 .container-in,
 .container-out {
   display: flex;
@@ -8,7 +15,7 @@
 }
 
 .container-out {
-  background-color: color(blue, 30);
+  background-color: color(blue, 20);
   padding: spacing(1);
   border-radius: border(radius, xxlarge);
   width: fit-content;
@@ -16,12 +23,12 @@
 }
 
 .container-in {
-  background-color: color(yellow, base);
+  background-color: color(yellow, 10);
   padding: spacing(2);
   border-radius: border(radius, xxlarge);
-  margin-left: 0.1rem;
+  margin-left: 0;
   position: relative;
-  width: 19.17rem;
+  width: 22rem;
   height: 4.6rem;
   border-bottom: border(width, medium) solid rgba(255, 0, 0, 0.2);
 }
@@ -48,7 +55,20 @@
 
 .create-room {
   font-size: font(size, 60);
-  font-weight: font(weight, semi-bold);
+  font-weight: font(weight, extra-bold);
   color: color(white, base);
-  -webkit-text-stroke: border(width, thin) color(blue, 10);
+  text-shadow:
+    -0.15rem -0.15rem 0 color(blue, 10),
+    0.15rem -0.15rem 0 color(blue, 10),
+    -0.15rem 0.15rem 0 color(blue, 10),
+    0.15rem 0.15rem 0 color(blue, 10),
+    -0.1rem 0 0 color(blue, 10),
+    0.1rem 0 0 color(blue, 10),
+    0 -0.1rem 0 color(blue, 10),
+    0 0.1rem 0 color(blue, 10);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: spacing(8);
 }
