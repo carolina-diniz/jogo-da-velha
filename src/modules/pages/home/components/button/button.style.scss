@@ -1,0 +1,40 @@
+@use '~styles' as *;
+
+.button__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: color(yellow, base);
+  width: 20rem;
+  height: 5.4rem;
+  border-radius: 1000rem;
+  border: solid 0.4rem color(blue, 50);
+  cursor: pointer;
+}
+
+.button__label {
+  font-size: font(size, 50);
+  letter-spacing: 0.05rem;
+  font-weight: font(weight, medium);
+  color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-text-stroke: 0.4rem color(blue, 50);
+  paint-order: stroke fill;
+  width: 13.8rem;
+  text-align: center;
+}
+
+.button__img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: color(red, base);
+  border-radius: 1000px;
+  border: solid 0.1rem color(red, base);
+  box-shadow: 0 0.2rem 0 color(red, 10);
+}
