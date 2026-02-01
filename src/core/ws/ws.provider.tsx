@@ -25,8 +25,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
   const isMyTurn = gameState.turn === socketId;
 
   useEffect(() => {
-    const wsUrl =
-      (import.meta.env?.VITE_WS_URL as string) ?? 'http://jogo.kaworii.com.br:5046/GameHub';
+    const wsUrl = (import.meta.env?.VITE_WS_URL as string) ?? 'https://jogo.kaworii.com.br/GameHub';
 
     console.log('🔌 Tentando conectar ao SignalR:', wsUrl);
 
