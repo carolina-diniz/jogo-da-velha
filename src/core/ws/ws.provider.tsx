@@ -1,11 +1,11 @@
+import * as signalR from '@microsoft/signalr';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
 import { SocketContext } from './ws.context';
 import type { GameState, Player } from './ws.type';
 
 export function SocketProvider(props: { children: React.ReactNode }): React.ReactElement {
   const { children } = props;
-  const socketRef = useRef<Socket | null>(null);
+  const connectionRef = useRef<signalR.HubConnection | null>(null);
 
   const [isConnected, setIsConnected] = useState(false);
   const [socketId, setSocketId] = useState<string | undefined>(undefined);
@@ -25,87 +25,118 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
   const isMyTurn = gameState.turn === socketId;
 
   useEffect(() => {
-    const wsUrl = (import.meta.env?.VITE_WS_URL as string) ?? 'ws://localhost:3000';
-    const socketInstance = io(wsUrl, {
-      reconnection: true,
-      reconnectionAttempts: Infinity,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 30000,
+    const wsUrl =
+      (import.meta.env?.VITE_WS_URL as string) ?? 'http://jogo.kaworii.com.br:5046/GameHub';
+
+    console.log('🔌 Tentando conectar ao SignalR:', wsUrl);
+
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(wsUrl, {
+        skipNegotiation: false,
+        transport:
+          signalR.HttpTransportType.WebSockets |
+          signalR.HttpTransportType.ServerSentEvents |
+          signalR.HttpTransportType.LongPolling,
+      })
+      .withAutomaticReconnect({
+        nextRetryDelayInMilliseconds: () => 1000,
+      })
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+
+    connectionRef.current = connection;
+
+    connection.onreconnecting(() => {
+      setIsConnected(false);
+      console.log('Tentando reconectar ao servidor SignalR...');
     });
 
-    socketRef.current = socketInstance;
-
-    socketInstance.on('connect', () => {
+    connection.onreconnected((connectionId) => {
       setIsConnected(true);
-      setSocketId(socketInstance.id);
-
-      console.log('Conectado ao servidor de WebSocket com ID:', socketInstance.id);
+      setSocketId(connectionId);
+      console.log('Reconectado ao servidor SignalR com ID:', connectionId);
     });
 
-    socketInstance.on('disconnect', () => {
+    connection.onclose(() => {
       setIsConnected(false);
       setSocketId(undefined);
-
-      console.log('Desconectado do servidor de WebSocket');
+      console.log('Desconectado do servidor SignalR');
     });
 
-    socketInstance.on('room_state', (state: GameState) => {
+    // Registrar handlers para mensagens do servidor
+    connection.on('RoomState', (state: GameState) => {
       setGameState(state);
-
       console.log('Estado da sala atualizado:', state);
     });
 
-    socketInstance.on('player_joined', (player: Player) => {
+    connection.on('PlayerJoined', (player: Player) => {
       setGameState((prev) => ({
         ...prev,
         players: [...prev.players, player],
       }));
-
       console.log('Jogador entrou na sala:', player);
     });
 
-    socketInstance.on('player_left', (player: Player) => {
+    connection.on('PlayerLeft', (player: Player) => {
       setGameState((prev) => ({
         ...prev,
         players: prev.players.filter((p) => p.id !== player.id),
       }));
-
       console.log('Jogador saiu da sala:', player);
     });
 
-    socketInstance.on('game_over', (data: { path: number[] }) => {
+    connection.on('GameOver', (data: { path: number[] }) => {
       setGameState((prev) => ({ ...prev, winnerPath: data.path }));
     });
 
+    // Iniciar conexão
+    connection
+      .start()
+      .then(() => {
+        setIsConnected(true);
+        setSocketId(connection.connectionId ?? undefined);
+        console.log('Conectado ao servidor SignalR com ID:', connection.connectionId);
+      })
+      .catch((err) => {
+        console.error('Erro ao conectar ao servidor SignalR:', err);
+      });
+
     return () => {
-      socketInstance.removeAllListeners();
-      socketInstance.close();
-      if (socketRef.current === socketInstance) {
-        socketRef.current = null;
+      connection.stop();
+      if (connectionRef.current === connection) {
+        connectionRef.current = null;
       }
     };
   }, []);
 
   const createRoom = useCallback(() => {
-    socketRef.current?.emit('create_room');
+    connectionRef.current?.invoke('CreateRoom').catch((err) => {
+      console.error('Erro ao criar sala:', err);
+    });
 
     console.log('Solicitação para criar uma nova sala enviada');
   }, []);
 
   const joinRoom = useCallback((roomId: string) => {
-    socketRef.current?.emit('join_room', { roomId });
+    connectionRef.current?.invoke('JoinRoom', roomId).catch((err) => {
+      console.error('Erro ao entrar na sala:', err);
+    });
 
     console.log('Tentando entrar na sala:', roomId);
   }, []);
 
   const makeMove = useCallback((x: number, y: number) => {
-    socketRef.current?.emit('make_move', { x, y });
+    connectionRef.current?.invoke('MakeMove', x, y).catch((err) => {
+      console.error('Erro ao fazer jogada:', err);
+    });
 
     console.log('Jogada realizada:', { x, y });
   }, []);
 
   const sendMessage = useCallback((message: string) => {
-    socketRef.current?.emit('send_message', { message });
+    connectionRef.current?.invoke('SendMessage', message).catch((err) => {
+      console.error('Erro ao enviar mensagem:', err);
+    });
 
     console.log('Mensagem enviada:', message);
   }, []);
