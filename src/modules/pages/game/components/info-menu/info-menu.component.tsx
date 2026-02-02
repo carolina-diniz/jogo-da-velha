@@ -34,7 +34,7 @@ export function InfoMenu(): JSX.Element {
         </div>
         <Button>REGRAS</Button>
         <Button>TEMAS</Button>
-        <Button variant>IDIOMAS</Button>
+        <Button>IDIOMAS</Button>
       </div>
     </div>
   );
