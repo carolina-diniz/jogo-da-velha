@@ -8,8 +8,17 @@
   width: 20rem;
   height: 5.4rem;
   border-radius: 1000rem;
-  border: solid 0.4rem color(blue, 50);
+  border-bottom: border(width, medium) solid rgba(255, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.button__label,
+.button__i {
+  margin-top: 0.4rem;
+}
+.button__container-out {
+  border-radius: 1000rem;
+  border: solid 0.4rem color(blue, 50);
 }
 
 .button__label {
