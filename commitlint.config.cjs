@@ -16,6 +16,8 @@ module.exports = {
       'always',
       [
         '*',
+        'github',
+        'github/workflows',
         'assets',
         'core',
         'core/components',

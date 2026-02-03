@@ -53,7 +53,7 @@ jobs:
           rsync -rlpzD -e "ssh -o StrictHostKeyChecking=no" \
             --no-owner --no-group --no-t \
             --delete \
-            dist/ $VM_USER@$VM_IP:/var/www/jogo-da-velha/
+            dist/ $VM_USER@$VM_IP:/var/www/jdv/front/
 
           echo "🚀 Deploy realizado com sucesso!"
 
