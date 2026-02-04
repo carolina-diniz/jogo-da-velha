@@ -1,4 +1,4 @@
-import { createElement, type JSX } from 'react';
+import { createElement } from 'react';
 import { Route } from 'react-router-dom';
 
 interface Module {
@@ -7,7 +7,7 @@ interface Module {
 
 export interface RouteConfig {
   path: string;
-  element: () => JSX.Element;
+  element: React.ComponentType;
 }
 
 export const RoutesConfig = {
@@ -25,7 +25,10 @@ export const RoutesConfig = {
         if (module.default) {
           const route = module.default as RouteConfig;
 
-          const element = createElement(Route, { ...route, element: route.element() });
+          const element = createElement(Route, {
+            path: route.path,
+            element: createElement(route.element),
+          });
 
           routes.push(element);
         }
