@@ -6,11 +6,11 @@ interface PlayerProps {
   name: string;
   wins: number;
   isSelected: boolean;
-  avatarUrl: string;
+  avatar: string;
 }
 
 export function Player(props: PlayerProps): JSX.Element {
-  const { name, wins, isSelected, avatarUrl } = props;
+  const { name, wins, isSelected, avatar: avatarUrl } = props;
 
   return (
     <div className={isSelected ? 'player__container selected' : 'player__container'}>

@@ -1,20 +1,15 @@
 import type { JSX } from 'react';
-import { Button } from '~core';
+import { Button, useSocket } from '~core';
 import { RoomCode } from '../room-code';
 import { Player } from './components';
 import './info-menu.style.scss';
 
 export function InfoMenu(): JSX.Element {
-  const players = [
-    { id: '1', name: 'Kaworii', wins: 3, avatarUrl: 'cat' },
-    { id: '2', name: 'Felipe', wins: 9, avatarUrl: 'panda' },
-  ];
-  const turn = { id: '1' };
-  const draw = 0;
+  const { players, draws, turn, roomId } = useSocket();
 
   return (
     <div className="info-menu__container">
-      <RoomCode />
+      <RoomCode code={roomId} />
       <div className="info-menu">
         <p className="info-menu__title">JOGADORES {players.length}/2</p>
         <div className="info-menu__box">
@@ -22,14 +17,14 @@ export function InfoMenu(): JSX.Element {
             <Player
               name={player.name}
               wins={player.wins}
-              avatarUrl={player.avatarUrl}
+              avatar={player.avatar}
               key={player.id}
-              isSelected={turn.id === player.id}
+              isSelected={turn === player.id}
             />
           ))}
           <div className="info-menu__draw">
             <p>Empates</p>
-            <span>{draw}</span>
+            <span>{draws}</span>
           </div>
         </div>
         <Button>REGRAS</Button>

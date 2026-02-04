@@ -9,11 +9,11 @@ function main(): void {
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <SocketProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <SocketProvider>
           <Routes>{routes}</Routes>
-        </BrowserRouter>
-      </SocketProvider>
+        </SocketProvider>
+      </BrowserRouter>
     </StrictMode>,
   );
 }

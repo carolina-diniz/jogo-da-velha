@@ -1,153 +1,183 @@
-import * as signalR from '@microsoft/signalr';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useWebSocketConnection } from './hooks';
 import { SocketContext } from './ws.context';
-import type { GameState, Player } from './ws.type';
+import type { Board, CreateRoomResponse, Player } from './ws.type';
 
 export function SocketProvider(props: { children: React.ReactNode }): React.ReactElement {
   const { children } = props;
-  const connectionRef = useRef<signalR.HubConnection | null>(null);
+  const { connection, isConnected, connectionId } = useWebSocketConnection();
+  const navigate = useNavigate();
 
-  const [isConnected, setIsConnected] = useState(false);
-  const [socketId, setSocketId] = useState<string | undefined>(undefined);
-  const [gameState, setGameState] = useState<GameState>({
-    roomId: null,
-    board: [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
-    ],
-    players: [],
-    turn: '',
-    draws: 0,
-  });
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [board, setBoard] = useState<Board>([
+    { value: null, isHighlighted: false },
+    { value: null, isHighlighted: false },
+    { value: null, isHighlighted: false },
+    { value: null, isHighlighted: false },
+    { value: null, isHighlighted: false },
+    { value: null, isHighlighted: false },
+    { value: null, isHighlighted: false },
+    { value: null, isHighlighted: false },
+    { value: null, isHighlighted: false },
+  ]);
+  const [roomId, setRoomId] = useState<string | null>(null);
+  const [turn, setTurn] = useState<string>('');
+  const [draws] = useState(0);
+  const [winnerPath, setWinnerPath] = useState<number[] | undefined>(undefined);
 
-  const me = gameState.players.find((p) => p.id === socketId);
-  const isMyTurn = gameState.turn === socketId;
+  const me = players.find((p) => p.id === connectionId);
+  const isMyTurn = turn === connectionId;
 
   useEffect(() => {
-    const wsUrl = (import.meta.env?.VITE_WS_URL as string) ?? 'https://jogo.kaworii.com.br/GameHub';
+    if (!connection) return;
 
-    console.log('🔌 Tentando conectar ao SignalR:', wsUrl);
+    connection.on('PlayerJoined', (response: { player: Player }) => {
+      const { player } = response;
 
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl(wsUrl, {
-        skipNegotiation: false,
-        transport:
-          signalR.HttpTransportType.WebSockets |
-          signalR.HttpTransportType.ServerSentEvents |
-          signalR.HttpTransportType.LongPolling,
-      })
-      .withAutomaticReconnect({
-        nextRetryDelayInMilliseconds: () => 1000,
-      })
-      .configureLogging(signalR.LogLevel.Information)
-      .build();
+      setPlayers((prev) => {
+        console.log('PlayerJoined event received:', player);
+        if (prev.find((p) => p.id === player.id)) return prev;
 
-    connectionRef.current = connection;
-
-    connection.onreconnecting(() => {
-      setIsConnected(false);
-      console.log('Tentando reconectar ao servidor SignalR...');
-    });
-
-    connection.onreconnected((connectionId) => {
-      setIsConnected(true);
-      setSocketId(connectionId);
-      console.log('Reconectado ao servidor SignalR com ID:', connectionId);
-    });
-
-    connection.onclose(() => {
-      setIsConnected(false);
-      setSocketId(undefined);
-      console.log('Desconectado do servidor SignalR');
-    });
-
-    // Registrar handlers para mensagens do servidor
-    connection.on('RoomState', (state: GameState) => {
-      setGameState(state);
-      console.log('Estado da sala atualizado:', state);
-    });
-
-    connection.on('PlayerJoined', (player: Player) => {
-      setGameState((prev) => ({
-        ...prev,
-        players: [...prev.players, player],
-      }));
-      console.log('Jogador entrou na sala:', player);
+        return [...prev, player];
+      });
     });
 
     connection.on('PlayerLeft', (player: Player) => {
-      setGameState((prev) => ({
-        ...prev,
-        players: prev.players.filter((p) => p.id !== player.id),
-      }));
-      console.log('Jogador saiu da sala:', player);
+      setPlayers((prev) => prev.filter((p) => p.id !== player.id));
     });
 
-    connection.on('GameOver', (data: { path: number[] }) => {
-      setGameState((prev) => ({ ...prev, winnerPath: data.path }));
+    connection.on('GameOver', (data: { playerId: string; path: number[] }) => {
+      setWinnerPath(data.path);
+      setPlayers((prev) =>
+        prev.map((p) => (p.id === data.playerId ? { ...p, wins: p.wins + 1 } : p)),
+      );
     });
-
-    // Iniciar conexão
-    connection
-      .start()
-      .then(() => {
-        setIsConnected(true);
-        setSocketId(connection.connectionId ?? undefined);
-        console.log('Conectado ao servidor SignalR com ID:', connection.connectionId);
-      })
-      .catch((err) => {
-        console.error('Erro ao conectar ao servidor SignalR:', err);
-      });
 
     return () => {
-      connection.stop();
-      if (connectionRef.current === connection) {
-        connectionRef.current = null;
-      }
+      connection.off('PlayerJoined');
+      connection.off('PlayerLeft');
+      connection.off('GameOver');
     };
-  }, []);
+  }, [connection]);
 
-  const createRoom = useCallback(() => {
-    connectionRef.current?.invoke('CreateRoom').catch((err) => {
-      console.error('Erro ao criar sala:', err);
-    });
+  const createRoom = useCallback(
+    (playerName: string, playerAvatar: string) => {
+      if (!connection) {
+        console.error('Conexão não estabelecida');
 
-    console.log('Solicitação para criar uma nova sala enviada');
-  }, []);
+        return;
+      }
 
-  const joinRoom = useCallback((roomId: string) => {
-    connectionRef.current?.invoke('JoinRoom', roomId).catch((err) => {
-      console.error('Erro ao entrar na sala:', err);
-    });
+      connection
+        .invoke<CreateRoomResponse>('CreateRoom', { name: playerName, avatar: playerAvatar })
+        .then((response) => {
+          const playersArray = Object.values(response.room.players);
 
-    console.log('Tentando entrar na sala:', roomId);
-  }, []);
+          setRoomId(response.room.id);
+          setPlayers(playersArray);
+          setBoard([
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+          ]);
+          setTurn(playersArray[0].id);
+          navigate('/game');
+        })
+        .catch((err) => console.error('Erro ao criar sala:', err));
+    },
+    [connection, navigate],
+  );
 
-  const makeMove = useCallback((x: number, y: number) => {
-    connectionRef.current?.invoke('MakeMove', x, y).catch((err) => {
-      console.error('Erro ao fazer jogada:', err);
-    });
+  const joinRoom = useCallback(
+    (roomIdParam: string, playerName: string, playerAvatar: string) => {
+      if (!connection) {
+        console.error('Conexão não estabelecida');
 
-    console.log('Jogada realizada:', { x, y });
-  }, []);
+        return;
+      }
 
-  const sendMessage = useCallback((message: string) => {
-    connectionRef.current?.invoke('SendMessage', message).catch((err) => {
-      console.error('Erro ao enviar mensagem:', err);
-    });
+      connection
+        .invoke<CreateRoomResponse>('JoinRoom', {
+          IdRoom: roomIdParam,
+          name: playerName,
+          avatar: playerAvatar,
+        })
+        .then((response) => {
+          const playersArray = Object.values(response.room.players);
 
-    console.log('Mensagem enviada:', message);
-  }, []);
+          setRoomId(response.room.id);
+          setPlayers(playersArray);
+          setBoard([
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+            { value: null, isHighlighted: false },
+          ]);
+          setTurn(playersArray[0].id);
+          navigate('/game');
+        })
+        .catch((err) => console.error('Erro ao entrar na sala:', err));
+    },
+    [connection, navigate],
+  );
+
+  const makeMove = useCallback(
+    (x: number, y: number) => {
+      if (!connection) {
+        console.error('Conexão não estabelecida');
+
+        return;
+      }
+
+      connection
+        .invoke('MakeMove', x, y)
+        .then((response) => console.log(response))
+        .catch((err) => console.error('Erro ao fazer jogada:', err));
+    },
+    [connection],
+  );
+
+  const sendMessage = useCallback(
+    (message: string) => {
+      if (!connection) {
+        console.error('Conexão não estabelecida');
+
+        return;
+      }
+
+      connection
+        .invoke('SendMessage', message)
+        .then((response) => console.log(response))
+        .catch((err) => console.error('Erro ao enviar mensagem:', err));
+    },
+    [connection],
+  );
 
   return (
     <SocketContext.Provider
       value={{
-        socketId,
-        gameState,
+        socketId: connectionId,
+        roomId,
+        players,
+        turn,
+        draws,
+        winnerPath,
         connected: isConnected,
         me,
         isMyTurn,
+        board,
         createRoom,
         joinRoom,
         makeMove,
