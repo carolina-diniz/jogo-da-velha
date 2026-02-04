@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import type { Symbol } from '~core';
 import type { BlockProps } from './block.component';
 
 interface BlockReturn {
-  value: 'o' | 'x' | null;
+  value: Symbol;
   isValid: boolean;
   isHighlighted: boolean;
   onPress: () => void;

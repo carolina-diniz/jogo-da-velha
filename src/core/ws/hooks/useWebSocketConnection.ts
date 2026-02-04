@@ -12,7 +12,7 @@ export function useWebSocketConnection(): UseWebSocketConnectionReturn {
   const [connectionId, setConnectionId] = useState<string | undefined>(undefined);
 
   const connection = useMemo(() => {
-    const wsUrl = (import.meta.env?.VITE_WS_URL as string) ?? 'http://127.0.0.1:5046/GameHub';
+    const wsUrl = (import.meta.env?.VITE_WS_URL as string) ?? 'https://jogo.kaworii.com.br/GameHub';
 
     console.log('🔌 Conectando ao SignalR:', wsUrl);
 

@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes } from 'react-router-dom';
-import { RoutesConfig, SocketProvider } from '~core';
+import { PlayerProvider, RoutesConfig, SocketProvider } from '~core';
 import './main.scss';
 
 function main(): void {
@@ -11,7 +11,9 @@ function main(): void {
     <StrictMode>
       <BrowserRouter>
         <SocketProvider>
-          <Routes>{routes}</Routes>
+          <PlayerProvider>
+            <Routes>{routes}</Routes>
+          </PlayerProvider>
         </SocketProvider>
       </BrowserRouter>
     </StrictMode>,

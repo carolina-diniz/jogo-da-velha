@@ -4,8 +4,15 @@ import { HomeView } from './home.view';
 import { useHomePage } from './hooks/home.hook';
 
 export function HomePage(): JSX.Element {
-  const { playerName, selectedAvatar, setPlayerName, setSelectedAvatar, onCreateRoom, onJoinRoom } =
-    useHomePage();
+  const {
+    playerName,
+    selectedAvatar,
+    placeholder,
+    setPlayerName,
+    setSelectedAvatar,
+    onCreateRoom,
+    onJoinRoom,
+  } = useHomePage();
 
   return (
     <>
@@ -13,6 +20,7 @@ export function HomePage(): JSX.Element {
       <HomeView
         playerName={playerName}
         selectedAvatar={selectedAvatar}
+        placeholder={placeholder}
         setPlayerName={setPlayerName}
         setSelectedAvatar={setSelectedAvatar}
         onCreateRoom={onCreateRoom}
