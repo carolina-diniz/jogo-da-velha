@@ -8,6 +8,7 @@ import './home.style.scss';
 interface HomeParams {
   playerName: string;
   selectedAvatar: string;
+  placeholder: string;
   setPlayerName: (name: string) => void;
   setSelectedAvatar: (avatar: string) => void;
   onCreateRoom: () => void;
@@ -15,8 +16,15 @@ interface HomeParams {
 }
 
 export function HomeView(params: HomeParams): JSX.Element {
-  const { playerName, selectedAvatar, setPlayerName, setSelectedAvatar, onCreateRoom, onJoinRoom } =
-    params;
+  const {
+    playerName,
+    selectedAvatar,
+    placeholder,
+    setPlayerName,
+    setSelectedAvatar,
+    onCreateRoom,
+    onJoinRoom,
+  } = params;
 
   const [roomId, setRoomId] = useState<string>('');
 
@@ -27,7 +35,7 @@ export function HomeView(params: HomeParams): JSX.Element {
         <div className="home__form">
           <div className="home__form-fields">
             <Avatar selectedAvatar={selectedAvatar} onAvatarChange={setSelectedAvatar} />
-            <NameInput value={playerName} onChange={setPlayerName} />
+            <NameInput value={playerName} onChange={setPlayerName} placeholder={placeholder} />
             <input
               value={roomId}
               onChange={(e) => setRoomId(e.target.value)}

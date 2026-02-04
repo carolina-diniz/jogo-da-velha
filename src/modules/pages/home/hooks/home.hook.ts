@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useSocket } from '~core';
+import { usePlayer, useSocket } from '~core';
 
 export interface HomePageReturn {
   playerName: string;
   selectedAvatar: string;
+  placeholder: string;
   setPlayerName: (name: string) => void;
   setSelectedAvatar: (avatar: string) => void;
   onCreateRoom: () => void;
@@ -12,20 +12,20 @@ export interface HomePageReturn {
 
 export function useHomePage(): HomePageReturn {
   const websocket = useSocket();
-  const [playerName, setPlayerName] = useState<string>('Anonimo321');
-  const [selectedAvatar, setSelectedAvatar] = useState<string>('cat');
+  const { playerName, selectedAvatar, placeholder, setPlayerName, setSelectedAvatar } = usePlayer();
 
   function onCreateRoom(): void {
-    websocket.createRoom(playerName, selectedAvatar);
+    websocket.createRoom(playerName === '' ? placeholder : playerName, selectedAvatar);
   }
 
   function onJoinRoom(roomId: string): void {
-    websocket.joinRoom(roomId, playerName, selectedAvatar);
+    websocket.joinRoom(roomId, playerName === '' ? placeholder : playerName, selectedAvatar);
   }
 
   return {
     playerName,
     selectedAvatar,
+    placeholder,
     setPlayerName,
     setSelectedAvatar,
     onCreateRoom,
