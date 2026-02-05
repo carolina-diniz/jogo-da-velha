@@ -1,14 +1,13 @@
 import type { JSX } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '~core';
+import { Button, useSocket } from '~core';
 import { Board, InfoMenu } from './components';
 import './game.style.scss';
 
 export function GameView(): JSX.Element {
-  const navigate = useNavigate();
+  const websocket = useSocket();
 
   function onClick(): void {
-    navigate('/');
+    websocket.leaveRoom();
   }
 
   return (

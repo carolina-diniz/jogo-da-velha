@@ -38,6 +38,7 @@ export interface SocketContextData {
   board: Board;
   createRoom: (playerName: string, playerAvatar: string) => void;
   joinRoom: (roomId: string, playerName: string, playerAvatar: string) => void;
+  leaveRoom: () => void;
   makeMove: (x: number, y: number) => void;
   sendMessage: (text: string) => void;
 }

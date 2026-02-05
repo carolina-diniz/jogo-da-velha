@@ -43,7 +43,9 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       });
     });
 
-    connection.on('PlayerLeft', (player: Player) => {
+    connection.on('PlayerLeft', (response: { player: Player }) => {
+      const { player } = response;
+
       setPlayers((prev) => prev.filter((p) => p.id !== player.id));
     });
 
@@ -149,6 +151,22 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
     [connection],
   );
 
+  const leaveRoom = useCallback(() => {
+    if (!connection) {
+      console.error('Conexão não estabelecida');
+
+      return;
+    }
+
+    connection
+      .invoke('LeaveRoom', roomId)
+      .then(() => {
+        navigate('/');
+        console.log('Saiu da sala com sucesso');
+      })
+      .catch((err) => console.error('Erro ao sair da sala:', err));
+  }, [connection, roomId, navigate]);
+
   const sendMessage = useCallback(
     (message: string) => {
       if (!connection) {
@@ -180,6 +198,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         board,
         createRoom,
         joinRoom,
+        leaveRoom,
         makeMove,
         sendMessage,
       }}
