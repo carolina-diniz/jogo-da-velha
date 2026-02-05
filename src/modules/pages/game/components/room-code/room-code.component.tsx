@@ -1,11 +1,13 @@
 import type { JSX } from 'react';
 import './room-code.style.scss';
 
-export function RoomCode(): JSX.Element {
+export function RoomCode(props: { code: string | null }): JSX.Element {
+  const { code } = props;
+
   return (
     <div className="room-code__content">
       <h1 className="room-code__title">SALA</h1>
-      <span className="room-code__code">D72G6D</span>
+      <span className="room-code__code">{code ?? '******'}</span>
     </div>
   );
 }

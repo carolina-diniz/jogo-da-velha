@@ -1,11 +1,12 @@
 import { type JSX } from 'react';
 import svgO from '~assets/o.svg';
 import svgX from '~assets/x.svg';
+import type { Symbol } from '~core';
 import { useBlock } from './block.hook';
 import './block.style.scss';
 
 export interface BlockProps {
-  value: 'o' | 'x' | null;
+  value: Symbol;
   isHighlighted: boolean;
 }
 
