@@ -14,8 +14,8 @@ export function Block(props: BlockProps): JSX.Element {
   const { isValid, isHighlighted, value, onPress } = useBlock(props);
 
   const images = {
-    o: svgO,
-    x: svgX,
+    O: svgO,
+    X: svgX,
   };
 
   return (
