@@ -2,20 +2,25 @@
 
 .avatar__container {
   position: relative;
-  width: 20rem;
-  height: 20rem;
+  width: 10rem;
+  height: 10rem;
   margin: border(width, medium);
   background-color: color(red, base);
   border-radius: border(radius, circular);
   border: solid border(width, medium) color(white, base);
   box-shadow: 0 0 0 border(width, medium) color(purple, 20);
+
+  @include respond-to(xl) {
+    width: 20rem;
+    height: 20rem;
+  }
 }
 
 .avatar__btn-edit {
   position: absolute;
-  width: spacing(10);
-  height: spacing(10);
-  bottom: 1.5rem;
+  width: spacing(6);
+  height: spacing(6);
+  bottom: 0.8rem;
   right: 0;
   background-color: color(white, base);
   border-radius: border(radius, circular);
@@ -23,4 +28,10 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  @include respond-to(xl) {
+    width: spacing(10);
+    height: spacing(10);
+    bottom: 1.5rem;
+  }
 }
