@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { usePlayer, useSocket, type InputDialogModal } from '~core';
 
 export interface HomePageReturn {
@@ -8,12 +8,14 @@ export interface HomePageReturn {
   selectedAvatar: string;
   placeholder: string;
   isHidden: boolean;
+  shouldShowToast: boolean;
   setPlayerName: (value: string) => void;
   setSelectedAvatar: (value: string) => void;
   setIsHidden: (value: boolean) => void;
   onCreateRoom: () => void;
   onSubmit: () => void;
   onChangeValue: InputDialogModal['onChange'];
+  showToast: () => void;
 }
 
 export function useHomePage(): HomePageReturn {
@@ -23,6 +25,9 @@ export function useHomePage(): HomePageReturn {
   const [code, setCode] = useState<string>('');
   const [hasError, setHasError] = useState<boolean>(false);
   const [isHidden, setIsHidden] = useState<boolean>(true);
+
+  const [shouldShowToast, setShouldShowToast] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function onCreateRoom(): void {
     websocket.createRoom(playerName === '' ? placeholder : playerName, selectedAvatar);
@@ -50,6 +55,17 @@ export function useHomePage(): HomePageReturn {
     setCode('');
   }
 
+  function showToast(): void {
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    setShouldShowToast(true);
+    timeoutRef.current = setTimeout(() => {
+      setShouldShowToast(false);
+    }, 3000);
+  }
+
   return {
     userCode: code,
     hasError,
@@ -57,11 +73,13 @@ export function useHomePage(): HomePageReturn {
     selectedAvatar,
     placeholder,
     isHidden,
+    shouldShowToast,
     setPlayerName,
     setSelectedAvatar,
     setIsHidden,
     onCreateRoom,
     onSubmit,
     onChangeValue,
+    showToast,
   };
 }

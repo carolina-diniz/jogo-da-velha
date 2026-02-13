@@ -2,7 +2,7 @@ import { type JSX } from 'react';
 import doorSvg from '~assets/door.svg';
 import languageSvg from '~assets/language.svg';
 import plusSvg from '~assets/plus.svg';
-import { Modal, ModalKind, type InputDialogModal } from '~core';
+import { Modal, ModalKind, ModalPosition, type InputDialogModal } from '~core';
 import { Avatar, Button, NameInput } from './components';
 import './home.style.scss';
 
@@ -13,12 +13,14 @@ interface HomeParams {
   selectedAvatar: string;
   placeholder: string;
   isHidden: boolean;
+  shouldShowToast: boolean;
   setPlayerName: (value: string) => void;
   setSelectedAvatar: (value: string) => void;
   setIsHidden: (value: boolean) => void;
   onCreateRoom: () => void;
   onSubmit: () => void;
   onChangeValue: InputDialogModal['onChange'];
+  showToast: () => void;
 }
 
 export function HomeView(params: HomeParams): JSX.Element {
@@ -29,12 +31,14 @@ export function HomeView(params: HomeParams): JSX.Element {
     selectedAvatar,
     placeholder,
     isHidden,
+    shouldShowToast,
     setPlayerName,
     setSelectedAvatar,
     setIsHidden,
     onCreateRoom,
     onSubmit,
     onChangeValue,
+    showToast,
   } = params;
 
   return (
@@ -51,7 +55,7 @@ export function HomeView(params: HomeParams): JSX.Element {
             <div className="home__buttons">
               <Button name="CRIAR SALA" img={plusSvg} onClick={onCreateRoom} />
               <Button name="ENTRAR" img={doorSvg} onClick={() => setIsHidden(false)} />
-              <Button name="IDIOMA" img={languageSvg} />
+              <Button name="IDIOMA" img={languageSvg} onClick={() => showToast()} />
             </div>
           </div>
         </div>
@@ -68,6 +72,13 @@ export function HomeView(params: HomeParams): JSX.Element {
         onChange={onChangeValue}
         onSubmit={onSubmit}
         setIsHidden={setIsHidden}
+        hasOverlay
+      />
+      <Modal
+        $typeof={ModalKind.Toast}
+        description="Em breve..."
+        isHidden={!shouldShowToast}
+        position={ModalPosition.Bottom}
       />
     </>
   );

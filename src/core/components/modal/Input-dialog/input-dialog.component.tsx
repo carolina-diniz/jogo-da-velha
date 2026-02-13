@@ -29,6 +29,7 @@ export function InputDialogModal(props: InputDialog): JSX.Element {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onKeyDown={(keyEvent) => keyEvent.key === 'Enter' && onSubmit()}
         className={`input-dialog__input ${hasError ? 'error' : ''}`}
       />
       <Button variant width="20rem" onPress={onSubmit}>

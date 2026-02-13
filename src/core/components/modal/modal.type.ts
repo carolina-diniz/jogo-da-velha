@@ -12,9 +12,13 @@ export type InputDialogModal = ModalBase<ModalKind.InputDialog> & {
   setIsHidden: (value: boolean) => void;
 };
 
+export type ToastModal = ModalBase<ModalKind.Toast> & {
+  description: string;
+};
+
 export const enum ModalKind {
   InputDialog = 'INPUT-DIALOG',
-  // Toast = 'TOAST',
+  Toast = 'TOAST',
   // Confirm = 'CONFIRM',
 }
 
@@ -30,4 +34,4 @@ type ModalBase<T extends ModalKind> = {
   position?: ModalPosition;
 };
 
-export type ModalData = InputDialogModal;
+export type ModalData = InputDialogModal | ToastModal;
