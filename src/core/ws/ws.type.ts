@@ -37,7 +37,12 @@ export interface SocketContextData {
   isMyTurn: boolean;
   board: Board;
   createRoom: (playerName: string, playerAvatar: string) => void;
-  joinRoom: (roomId: string, playerName: string, playerAvatar: string) => void;
+  joinRoom: (
+    roomId: string,
+    playerName: string,
+    playerAvatar: string,
+    setHasError: (hasError: boolean) => void,
+  ) => void;
   leaveRoom: () => void;
   makeMove: (x: number, y: number) => void;
   sendMessage: (text: string) => void;

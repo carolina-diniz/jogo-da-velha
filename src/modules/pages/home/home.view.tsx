@@ -1,55 +1,74 @@
-import { useState, type JSX } from 'react';
+import { type JSX } from 'react';
 import doorSvg from '~assets/door.svg';
 import languageSvg from '~assets/language.svg';
 import plusSvg from '~assets/plus.svg';
+import { Modal, ModalKind, type InputDialogModal } from '~core';
 import { Avatar, Button, NameInput } from './components';
 import './home.style.scss';
 
 interface HomeParams {
+  userCode: string;
+  hasError: boolean;
   playerName: string;
   selectedAvatar: string;
   placeholder: string;
-  setPlayerName: (name: string) => void;
-  setSelectedAvatar: (avatar: string) => void;
+  isHidden: boolean;
+  setPlayerName: (value: string) => void;
+  setSelectedAvatar: (value: string) => void;
+  setIsHidden: (value: boolean) => void;
   onCreateRoom: () => void;
-  onJoinRoom: (roomId: string) => void;
+  onSubmit: () => void;
+  onChangeValue: InputDialogModal['onChange'];
 }
 
 export function HomeView(params: HomeParams): JSX.Element {
   const {
+    userCode,
+    hasError,
     playerName,
     selectedAvatar,
     placeholder,
+    isHidden,
     setPlayerName,
     setSelectedAvatar,
+    setIsHidden,
     onCreateRoom,
-    onJoinRoom,
+    onSubmit,
+    onChangeValue,
   } = params;
 
-  const [roomId, setRoomId] = useState<string>('');
-
   return (
-    <div className="home__wrapper">
-      <div className="home__card">
-        <h1 className="home__title">JOGO DA VELHA</h1>
-        <div className="home__form">
-          <div className="home__form-fields">
-            <Avatar selectedAvatar={selectedAvatar} onAvatarChange={setSelectedAvatar} />
-            <NameInput value={playerName} onChange={setPlayerName} placeholder={placeholder} />
-            <input
-              value={roomId}
-              onChange={(e) => setRoomId(e.target.value)}
-              placeholder="Código da sala"
-            />
-          </div>
-          <div className="home__separator"></div>
-          <div className="home__buttons">
-            <Button name="CRIAR SALA" img={plusSvg} onClick={onCreateRoom} />
-            <Button name="ENTRAR" img={doorSvg} onClick={() => onJoinRoom(roomId)} />
-            <Button name="IDIOMA" img={languageSvg} />
+    <>
+      <div className="home__wrapper">
+        <div className="home__card">
+          <h1 className="home__title">JOGO DA VELHA</h1>
+          <div className="home__form">
+            <div className="home__form-fields">
+              <Avatar selectedAvatar={selectedAvatar} onAvatarChange={setSelectedAvatar} />
+              <NameInput value={playerName} onChange={setPlayerName} placeholder={placeholder} />
+            </div>
+            <div className="home__separator"></div>
+            <div className="home__buttons">
+              <Button name="CRIAR SALA" img={plusSvg} onClick={onCreateRoom} />
+              <Button name="ENTRAR" img={doorSvg} onClick={() => setIsHidden(false)} />
+              <Button name="IDIOMA" img={languageSvg} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <Modal
+        $typeof={ModalKind.InputDialog}
+        title="ENTRAR COM CÓDIGO"
+        description="Digite o código para entrar na sala"
+        placeholder="XXXX-XXXX"
+        value={userCode}
+        buttonLabel="ENTRAR"
+        isHidden={isHidden}
+        hasError={hasError}
+        onChange={onChangeValue}
+        onSubmit={onSubmit}
+        setIsHidden={setIsHidden}
+      />
+    </>
   );
 }

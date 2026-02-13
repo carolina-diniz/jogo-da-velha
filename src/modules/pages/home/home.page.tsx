@@ -5,26 +5,36 @@ import { useHomePage } from './hooks/home.hook';
 
 export function HomePage(): JSX.Element {
   const {
+    userCode,
+    hasError,
     playerName,
     selectedAvatar,
     placeholder,
+    isHidden,
     setPlayerName,
     setSelectedAvatar,
+    setIsHidden,
     onCreateRoom,
-    onJoinRoom,
+    onSubmit,
+    onChangeValue,
   } = useHomePage();
 
   return (
     <>
       <Background />
       <HomeView
+        userCode={userCode}
+        hasError={hasError}
         playerName={playerName}
         selectedAvatar={selectedAvatar}
         placeholder={placeholder}
+        isHidden={isHidden}
         setPlayerName={setPlayerName}
         setSelectedAvatar={setSelectedAvatar}
+        setIsHidden={setIsHidden}
         onCreateRoom={onCreateRoom}
-        onJoinRoom={onJoinRoom}
+        onSubmit={onSubmit}
+        onChangeValue={onChangeValue}
       />
       <Footer />
     </>

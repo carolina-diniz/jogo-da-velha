@@ -16,14 +16,14 @@ export function Button(props: ButtomProps): JSX.Element {
   const variantName = isVariant ? 'button variant' : 'button';
 
   return (
-    <div
+    <button
       className={variantName}
       style={{ width }}
       onClick={onPress}
       onFocus={onFocus}
       onBlur={onBlur}
     >
-      <p className="button__text">{children}</p>
-    </div>
+      <p className={`button__text ${isVariant ? 'variant' : ''}`}>{children}</p>
+    </button>
   );
 }

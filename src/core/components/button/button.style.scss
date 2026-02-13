@@ -27,10 +27,7 @@
 }
 
 .button__text {
-  $textStrokeColor: color(purple, 20);
-  $textStrokeSize: border(width, medium);
-
-  font-size: font(size, 50);
+  font-size: 1.8rem;
   font-weight: font(weight, medium);
   color: color(white, base);
 
@@ -39,6 +36,15 @@
   -ms-user-select: none;
   user-select: none;
 
-  -webkit-text-stroke: $textStrokeSize $textStrokeColor;
+  -webkit-text-stroke: 0.4rem color(purple, 20);
   paint-order: stroke fill;
+
+  &.variant {
+    color: color(purple, 20);
+    font-weight: bolder;
+    letter-spacing: 0.08rem;
+
+    -webkit-text-stroke: 0.08rem color(purple, 20);
+    paint-order: stroke fill;
+  }
 }

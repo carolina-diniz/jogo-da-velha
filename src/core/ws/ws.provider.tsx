@@ -98,7 +98,12 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
   );
 
   const joinRoom = useCallback(
-    (roomIdParam: string, playerName: string, playerAvatar: string) => {
+    (
+      roomIdParam: string,
+      playerName: string,
+      playerAvatar: string,
+      setHasError: (hasError: boolean) => void,
+    ) => {
       if (!connection) {
         console.error('Conexão não estabelecida');
 
@@ -130,7 +135,10 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
           setTurn(playersArray[0].id);
           navigate('/game');
         })
-        .catch((err) => console.error('Erro ao entrar na sala:', err));
+        .catch((err) => {
+          console.error('Erro ao entrar na sala:', err);
+          setHasError(true);
+        });
     },
     [connection, navigate],
   );
@@ -161,11 +169,10 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
     connection
       .invoke('LeaveRoom', roomId)
       .then(() => {
-        navigate('/');
         console.log('Saiu da sala com sucesso');
       })
       .catch((err) => console.error('Erro ao sair da sala:', err));
-  }, [connection, roomId, navigate]);
+  }, [connection, roomId]);
 
   const sendMessage = useCallback(
     (message: string) => {
