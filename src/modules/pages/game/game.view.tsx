@@ -1,22 +1,34 @@
 import type { JSX } from 'react';
-import { Button, useSocket } from '~core';
+import { Button, Modal, ModalKind, ModalPosition } from '~core';
 import { Board, InfoMenu } from './components';
 import './game.style.scss';
 
-export function GameView(): JSX.Element {
-  const websocket = useSocket();
+interface GameParams {
+  isHidden: boolean;
+  description: string;
+  onClickLeave: () => void;
+  showToastModal: (text: string) => void;
+}
 
-  function onClick(): void {
-    websocket.leaveRoom();
-  }
+export function GameView(params: GameParams): JSX.Element {
+  const { isHidden, description, onClickLeave, showToastModal } = params;
 
   return (
-    <div className="game-page__container">
-      <InfoMenu />
-      <Board />
-      <Button width={'20rem'} onPress={onClick}>
-        SAIR
-      </Button>
-    </div>
+    <>
+      <div className="game-page__container">
+        <InfoMenu showToastModal={showToastModal} />
+        <Board />
+        <Button width={'20rem'} onPress={onClickLeave}>
+          SAIR
+        </Button>
+      </div>
+
+      <Modal
+        $typeof={ModalKind.Toast}
+        isHidden={isHidden}
+        description={description}
+        position={ModalPosition.Bottom}
+      />
+    </>
   );
 }

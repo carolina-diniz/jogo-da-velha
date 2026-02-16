@@ -1,0 +1,7 @@
+@use '~styles' as *;
+
+.toast__text {
+  font-size: font(size, 60);
+  color: color(blue, 60);
+  font-weight: font(weight, bold);
+}

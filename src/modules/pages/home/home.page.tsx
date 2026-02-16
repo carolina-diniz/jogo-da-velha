@@ -4,28 +4,12 @@ import { HomeView } from './home.view';
 import { useHomePage } from './hooks/home.hook';
 
 export function HomePage(): JSX.Element {
-  const {
-    playerName,
-    selectedAvatar,
-    placeholder,
-    setPlayerName,
-    setSelectedAvatar,
-    onCreateRoom,
-    onJoinRoom,
-  } = useHomePage();
+  const homePageParams = useHomePage();
 
   return (
     <>
       <Background />
-      <HomeView
-        playerName={playerName}
-        selectedAvatar={selectedAvatar}
-        placeholder={placeholder}
-        setPlayerName={setPlayerName}
-        setSelectedAvatar={setSelectedAvatar}
-        onCreateRoom={onCreateRoom}
-        onJoinRoom={onJoinRoom}
-      />
+      <HomeView {...homePageParams} />
       <Footer />
     </>
   );
