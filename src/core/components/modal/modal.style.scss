@@ -23,7 +23,7 @@
 
   width: 60rem;
   max-width: 94vw;
-  padding: 3rem 0;
+  padding: 3rem 6rem;
 
   background-color: color(purple, 60);
   border: solid 0.4rem color(purple, 20);
@@ -42,4 +42,19 @@
   left: 50%;
   transform: translate(-50%, -95%);
   z-index: 2;
+}
+
+.modal__title {
+  font-size: font(size, 70);
+  letter-spacing: 1%;
+  color: color(blue, 40);
+  -webkit-text-stroke: 0.4rem #403e8f;
+  paint-order: stroke fill;
+}
+
+.modal__description {
+  font-size: font(size, 60);
+  color: color(blue, 60);
+  font-weight: font(weight, bold);
+  text-align: center;
 }

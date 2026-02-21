@@ -17,12 +17,20 @@
     background-color: color(yellow, 10);
   }
 
-  &.variant {
+  &.secondary {
     background-color: color(purple, 30);
 
     &:hover {
       background-color: color(purple, 40);
     }
+  }
+
+  &.agree {
+    background-color: color(green, base);
+  }
+
+  &.disagree {
+    background-color: color(red, 30);
   }
 }
 
@@ -39,7 +47,7 @@
   -webkit-text-stroke: 0.4rem color(purple, 20);
   paint-order: stroke fill;
 
-  &.variant {
+  &.secondary {
     color: color(purple, 20);
     font-weight: bolder;
     letter-spacing: 0.08rem;
