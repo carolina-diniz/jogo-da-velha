@@ -3,7 +3,7 @@ import { type ChangeEvent } from 'react';
 export type ConfirmationModal = ModalBase<ModalKind.Confirm> & {
   title: string;
   description?: string;
-  buttonLabel: string[];
+  buttonLabel: [string, string];
   onClickConfirm: () => void;
   onClickClose: () => void;
 };

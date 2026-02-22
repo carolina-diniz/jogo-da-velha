@@ -12,10 +12,10 @@ export function ConfirmationModal(props: Confirmation): JSX.Element {
       {description !== undefined && <p className="modal__description">{description}</p>}
       <div className="confirmation-modal__buttons">
         <Button variant={'agree'} width="20rem" onPress={onClickConfirm}>
-          {buttonLabel[0]}
+          {buttonLabel[0] ?? 'Agree'}
         </Button>
         <Button variant={'disagree'} width="20rem" onPress={onClickClose}>
-          {buttonLabel[1]}
+          {buttonLabel[1] ?? 'Disagree'}
         </Button>
       </div>
     </>
