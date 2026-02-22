@@ -1,4 +1,5 @@
 import type { JSX, JSXElementConstructor } from 'react';
+import { ConfirmationModal } from './confirmation';
 import { InputDialogModal } from './Input-dialog';
 import './modal.style.scss';
 import { ModalKind, ModalPosition, type ModalData } from './modal.type';
@@ -8,6 +9,7 @@ import { ToastModal } from './toast';
 const ComponentByType: Record<ModalKind, JSXElementConstructor<any>> = {
   [ModalKind.InputDialog]: InputDialogModal,
   [ModalKind.Toast]: ToastModal,
+  [ModalKind.Confirm]: ConfirmationModal,
 };
 
 export function Modal(props: ModalData): JSX.Element {

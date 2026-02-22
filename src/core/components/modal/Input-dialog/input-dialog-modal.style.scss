@@ -25,20 +25,6 @@
   }
 }
 
-.input-dialog__title {
-  font-size: font(size, 70);
-  letter-spacing: 1%;
-  color: color(blue, 40);
-  -webkit-text-stroke: 0.4rem color(neutral, 40);
-  paint-order: stroke fill;
-}
-
-.input-dialog__text {
-  font-size: font(size, 60);
-  color: color(blue, 60);
-  font-weight: font(weight, bold);
-}
-
 .input-dialog__input {
   width: 40rem;
   height: input(1);

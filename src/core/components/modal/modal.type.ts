@@ -1,5 +1,13 @@
 import { type ChangeEvent } from 'react';
 
+export type ConfirmationModal = ModalBase<ModalKind.Confirm> & {
+  title: string;
+  description?: string;
+  buttonLabel: [string, string];
+  onClickConfirm: () => void;
+  onClickClose: () => void;
+};
+
 export type InputDialogModal = ModalBase<ModalKind.InputDialog> & {
   title: string;
   description?: string;
@@ -19,7 +27,7 @@ export type ToastModal = ModalBase<ModalKind.Toast> & {
 export const enum ModalKind {
   InputDialog = 'INPUT-DIALOG',
   Toast = 'TOAST',
-  // Confirm = 'CONFIRM',
+  Confirm = 'CONFIRM',
 }
 
 export const enum ModalPosition {
@@ -34,4 +42,4 @@ type ModalBase<T extends ModalKind> = {
   position?: ModalPosition;
 };
 
-export type ModalData = InputDialogModal | ToastModal;
+export type ModalData = InputDialogModal | ToastModal | ConfirmationModal;
