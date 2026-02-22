@@ -2,7 +2,7 @@ import { type JSX } from 'react';
 import doorSvg from '~assets/door.svg';
 import languageSvg from '~assets/language.svg';
 import plusSvg from '~assets/plus.svg';
-import { Modal, ModalKind, ModalPosition, type InputDialogModal } from '~core';
+import { Modal, ModalKind, ModalPosition, type InputDialogModalProps } from '~core';
 import { Avatar, Button, NameInput } from './components';
 import './home.style.scss';
 
@@ -19,7 +19,7 @@ interface HomeParams {
   setIsHidden: (value: boolean) => void;
   onCreateRoom: () => void;
   onSubmit: () => void;
-  onChangeValue: InputDialogModal['onChange'];
+  onChangeValue: InputDialogModalProps['onChange'];
   showToast: () => void;
 }
 

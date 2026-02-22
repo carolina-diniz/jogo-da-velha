@@ -1,10 +1,10 @@
 import type { JSX } from 'react';
 import closeIcon from '~assets/icons/close.svg';
 import { Button } from '../../button';
-import type { InputDialogModal as InputDialog } from '../modal.type';
+import type { InputDialogModalProps } from '../modal.type';
 import './input-dialog-modal.style.scss';
 
-export function InputDialogModal(props: InputDialog): JSX.Element {
+export function InputDialogModal(props: InputDialogModalProps): JSX.Element {
   const {
     title,
     description,

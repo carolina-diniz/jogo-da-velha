@@ -1,6 +1,6 @@
 import { type ChangeEvent } from 'react';
 
-export type ConfirmationModal = ModalBase<ModalKind.Confirm> & {
+export type ConfirmationModalProps = ModalBase<ModalKind.Confirm> & {
   title: string;
   description?: string;
   buttonLabel: [string, string];
@@ -8,7 +8,7 @@ export type ConfirmationModal = ModalBase<ModalKind.Confirm> & {
   onClickClose: () => void;
 };
 
-export type InputDialogModal = ModalBase<ModalKind.InputDialog> & {
+export type InputDialogModalProps = ModalBase<ModalKind.InputDialog> & {
   title: string;
   description?: string;
   placeholder: string;
@@ -20,7 +20,7 @@ export type InputDialogModal = ModalBase<ModalKind.InputDialog> & {
   setIsHidden: (value: boolean) => void;
 };
 
-export type ToastModal = ModalBase<ModalKind.Toast> & {
+export type ToastModalProps = ModalBase<ModalKind.Toast> & {
   description: string;
 };
 
@@ -42,4 +42,4 @@ type ModalBase<T extends ModalKind> = {
   position?: ModalPosition;
 };
 
-export type ModalData = InputDialogModal | ToastModal | ConfirmationModal;
+export type ModalData = InputDialogModalProps | ToastModalProps | ConfirmationModalProps;

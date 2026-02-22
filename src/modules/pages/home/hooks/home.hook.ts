@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { usePlayer, useSocket, type InputDialogModal } from '~core';
+import { usePlayer, useSocket, type InputDialogModalProps } from '~core';
 
 export interface HomePageReturn {
   userCode: string;
@@ -14,7 +14,7 @@ export interface HomePageReturn {
   setIsHidden: (value: boolean) => void;
   onCreateRoom: () => void;
   onSubmit: () => void;
-  onChangeValue: InputDialogModal['onChange'];
+  onChangeValue: InputDialogModalProps['onChange'];
   showToast: () => void;
 }
 

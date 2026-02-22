@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
 import { Button } from '../../button';
-import type { ConfirmationModal as Confirmation } from '../modal.type';
+import type { ConfirmationModalProps } from '../modal.type';
 import './confirmation.style.scss';
 
-export function ConfirmationModal(props: Confirmation): JSX.Element {
+export function ConfirmationModal(props: ConfirmationModalProps): JSX.Element {
   const { title, description, buttonLabel, onClickClose, onClickConfirm } = props;
 
   return (
