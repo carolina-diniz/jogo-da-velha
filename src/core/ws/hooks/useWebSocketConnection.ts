@@ -1,5 +1,5 @@
 import * as signalR from '@microsoft/signalr';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface UseWebSocketConnectionReturn {
   connection: signalR.HubConnection | null;
@@ -8,15 +8,16 @@ interface UseWebSocketConnectionReturn {
 }
 
 export function useWebSocketConnection(): UseWebSocketConnectionReturn {
+  const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [connectionId, setConnectionId] = useState<string | undefined>(undefined);
 
-  const connection = useMemo(() => {
+  useEffect(() => {
     const wsUrl = (import.meta.env?.VITE_WS_URL as string) ?? 'https://jogo.kaworii.com.br/GameHub';
 
     console.log('🔌 Conectando ao SignalR:', wsUrl);
 
-    return new signalR.HubConnectionBuilder()
+    const newConnection = new signalR.HubConnectionBuilder()
       .withUrl(wsUrl, {
         skipNegotiation: false,
         transport:
@@ -27,46 +28,43 @@ export function useWebSocketConnection(): UseWebSocketConnectionReturn {
       .withAutomaticReconnect({ nextRetryDelayInMilliseconds: () => 1000 })
       .configureLogging(signalR.LogLevel.Information)
       .build();
-  }, []);
 
-  useEffect(() => {
-    // Previne iniciar conexão que já está rodando (React StrictMode)
-    if (connection.state !== signalR.HubConnectionState.Disconnected) {
-      return;
-    }
-
-    connection.onreconnecting(() => {
+    newConnection.onreconnecting(() => {
       setIsConnected(false);
       console.log('🔄 Reconectando...');
     });
 
-    connection.onreconnected((connId) => {
+    newConnection.onreconnected((connId) => {
       setIsConnected(true);
       setConnectionId(connId);
       console.log('✅ Reconectado:', connId);
     });
 
-    connection.onclose(() => {
+    newConnection.onclose(() => {
       setIsConnected(false);
       setConnectionId(undefined);
       console.log('❌ Desconectado');
     });
 
-    connection
+    newConnection
       .start()
       .then(() => {
+        setConnection(newConnection);
         setIsConnected(true);
-        setConnectionId(connection.connectionId ?? undefined);
-        console.log('✅ Conectado:', connection.connectionId);
+        setConnectionId(newConnection.connectionId ?? undefined);
+        console.log('✅ Conectado:', newConnection.connectionId);
       })
-      .catch((err) => console.error('❌ Erro na conexão:', err));
+      .catch((err: unknown) => {
+        // AbortError esperado no StrictMode do React em dev (cleanup durante o start)
+        if ((err as Error)?.name === 'AbortError') return;
+        if ((err as Error)?.message?.includes('stop() was called')) return;
+        console.error('❌ Erro na conexão:', err);
+      });
 
     return () => {
-      if (connection.state === signalR.HubConnectionState.Connected) {
-        connection.stop();
-      }
+      newConnection.stop().catch((error) => console.log('❌ Erro ao parar a conexão:', error));
     };
-  }, [connection]);
+  }, []);
 
   return {
     connection,
