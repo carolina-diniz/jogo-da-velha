@@ -28,6 +28,11 @@ export interface CreateRoomResponse {
 export interface MakeMoveResponse {
   currentTurn: string;
   table: Symbol[][];
+  winner: string;
+  winnerMoves: number[][];
+  isDrawEvent: boolean;
+  draws: number;
+  players: Player[];
 }
 
 export interface SocketContextData {
@@ -36,7 +41,9 @@ export interface SocketContextData {
   players: Player[];
   turn: string;
   draws: number;
-  winnerPath?: number[];
+  hasDraw: boolean;
+  isWinner: boolean | null;
+  winnerPath: number[][] | undefined;
   connected: boolean;
   me: Player | undefined;
   isMyTurn: boolean;

@@ -2,7 +2,19 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWebSocketConnection } from './hooks';
 import { SocketContext } from './ws.context';
-import type { Board, CreateRoomResponse, MakeMoveResponse, Player } from './ws.type';
+import type { Board, CreateRoomResponse, MakeMoveResponse, Player, ResetResponse } from './ws.type';
+
+const initialBoard: Board = [
+  { value: null, isHighlighted: false },
+  { value: null, isHighlighted: false },
+  { value: null, isHighlighted: false },
+  { value: null, isHighlighted: false },
+  { value: null, isHighlighted: false },
+  { value: null, isHighlighted: false },
+  { value: null, isHighlighted: false },
+  { value: null, isHighlighted: false },
+  { value: null, isHighlighted: false },
+];
 
 export function SocketProvider(props: { children: React.ReactNode }): React.ReactElement {
   const { children } = props;
@@ -10,21 +22,12 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
   const navigate = useNavigate();
 
   const [players, setPlayers] = useState<Player[]>([]);
-  const [board, setBoard] = useState<Board>([
-    { value: null, isHighlighted: false },
-    { value: null, isHighlighted: false },
-    { value: null, isHighlighted: false },
-    { value: null, isHighlighted: false },
-    { value: null, isHighlighted: false },
-    { value: null, isHighlighted: false },
-    { value: null, isHighlighted: false },
-    { value: null, isHighlighted: false },
-    { value: null, isHighlighted: false },
-  ]);
+  const [board, setBoard] = useState<Board>(initialBoard);
   const [roomId, setRoomId] = useState<string | null>(null);
   const [turn, setTurn] = useState<string>('');
-  const [draws] = useState(0);
-  const [winnerPath, setWinnerPath] = useState<number[] | undefined>(undefined);
+  const [draws, setDraws] = useState(0);
+  const [isWinner, setIsWinner] = useState<boolean | null>(null);
+  const [hasDraw, setHasDraw] = useState<boolean>(false);
 
   const me = players.find((p) => p.id === connectionId);
   const isMyTurn = turn === connectionId;
@@ -49,25 +52,64 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       setPlayers((prev) => prev.filter((p) => p.id !== player.id));
     });
 
-    connection.on('GameOver', (data: { playerId: string; path: number[] }) => {
-      setWinnerPath(data.path);
-      setPlayers((prev) =>
-        prev.map((p) => (p.id === data.playerId ? { ...p, wins: p.wins + 1 } : p)),
-      );
+    connection.on('UpdatedTable', (data: { currentTurn: string; table: Board }) => {
+      const { table: updatedBoard, currentTurn } = data;
+
+      setBoard(updatedBoard);
+      setTurn(currentTurn);
     });
 
-    connection.on('MakedMove', (response: MakeMoveResponse) => {
+    connection.on('UpdateTable', (response: MakeMoveResponse) => {
+      console.log('UpdateTable event received:', response);
+
+      const {
+        currentTurn,
+        table,
+        winner: winnerId,
+        winnerMoves,
+        isDrawEvent,
+        draws: updatedDraws,
+        players: updatedPlayers,
+      } = response;
+
+      if (currentTurn !== undefined) {
+        setTurn(currentTurn);
+      }
+
+      if (table !== undefined) {
+        const highlightedIndices = new Set((winnerMoves ?? []).map(([x, y]) => y * 3 + x));
+
+        setBoard(
+          table.flat().map((value, index) => ({
+            value,
+            isHighlighted: highlightedIndices.has(index),
+          })),
+        );
+      }
+
+      if (winnerId !== undefined) {
+        setIsWinner(me?.id === winnerId);
+      }
+
+      if (isDrawEvent !== undefined && updatedDraws !== undefined && isDrawEvent) {
+        setHasDraw(true);
+        setDraws(updatedDraws);
+
+        return;
+      }
+
+      if (updatedPlayers !== undefined) {
+        setPlayers(updatedPlayers);
+      }
+    });
+
+    connection.on('Reset', (response: ResetResponse) => {
       const { currentTurn, table } = response;
 
-      console.log(table);
-
-      setTurn(currentTurn);
-      setBoard(
-        table.flat().map((value) => ({
-          value,
-          isHighlighted: false,
-        })),
-      );
+      if (currentTurn !== undefined && table !== undefined) {
+        setTurn(currentTurn);
+        setBoard(initialBoard);
+      }
     });
 
     return () => {
@@ -75,9 +117,10 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       connection.off('PlayerLeft');
       connection.off('GameOver');
       connection.off('MadeMove');
-      connection.off('MakedMove');
+      connection.off('UpdateTable');
+      connection.off('Reset');
     };
-  }, [connection]);
+  }, [connection, me]);
 
   const createRoom = useCallback(
     (playerName: string, playerAvatar: string) => {
@@ -94,17 +137,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
 
           setRoomId(response.room.id);
           setPlayers(playersArray);
-          setBoard([
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-          ]);
+          setBoard(initialBoard);
           setTurn(playersArray[0].id);
           navigate('/game');
         })
@@ -137,17 +170,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
 
           setRoomId(response.room.id);
           setPlayers(playersArray);
-          setBoard([
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-            { value: null, isHighlighted: false },
-          ]);
+          setBoard(initialBoard);
           setTurn(playersArray[0].id);
           navigate('/game');
         })
@@ -221,7 +244,8 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         players,
         turn,
         draws,
-        winnerPath,
+        hasDraw,
+        isWinner,
         connected: isConnected,
         me,
         isMyTurn,
