@@ -122,6 +122,20 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
     };
   }, [connection, me]);
 
+  useEffect(() => {
+    if (!connection || roomId == null) return;
+
+    const handlePageHide = (): void => {
+      connection.send('LeaveRoom', roomId).catch(console.error);
+    };
+
+    window.addEventListener('pagehide', handlePageHide);
+
+    return () => {
+      window.removeEventListener('pagehide', handlePageHide);
+    };
+  }, [connection, roomId]);
+
   const createRoom = useCallback(
     (playerName: string, playerAvatar: string) => {
       if (!connection) {
