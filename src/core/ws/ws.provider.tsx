@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWebSocketConnection } from './hooks';
 import { SocketContext } from './ws.context';
-import type { Board, CreateRoomResponse, Player } from './ws.type';
+import type { Board, CreateRoomResponse, MakeMoveResponse, Player } from './ws.type';
 
 export function SocketProvider(props: { children: React.ReactNode }): React.ReactElement {
   const { children } = props;
@@ -56,10 +56,26 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       );
     });
 
+    connection.on('MakedMove', (response: MakeMoveResponse) => {
+      const { currentTurn, table } = response;
+
+      console.log(table);
+
+      setTurn(currentTurn);
+      setBoard(
+        table.flat().map((value) => ({
+          value,
+          isHighlighted: false,
+        })),
+      );
+    });
+
     return () => {
       connection.off('PlayerJoined');
       connection.off('PlayerLeft');
       connection.off('GameOver');
+      connection.off('MadeMove');
+      connection.off('MakedMove');
     };
   }, [connection]);
 
@@ -151,12 +167,13 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         return;
       }
 
+      console.log('Enviando jogada:', { x, y });
+
       connection
-        .invoke('MakeMove', x, y)
-        .then((response) => console.log(response))
+        .invoke<MakeMoveResponse>('MakeMove', { IdRoom: roomId, block: { x, y } })
         .catch((err) => console.error('Erro ao fazer jogada:', err));
     },
-    [connection],
+    [connection, roomId],
   );
 
   const leaveRoom = useCallback(() => {

@@ -17,7 +17,12 @@ export function Board(): JSX.Element {
         <div className="board__wrapper">
           <div className="board__grid">
             {board.map((block, rowIndex) => (
-              <Block key={rowIndex} value={block.value} isHighlighted={block.isHighlighted} />
+              <Block
+                key={rowIndex}
+                index={rowIndex}
+                value={block.value}
+                isHighlighted={block.isHighlighted}
+              />
             ))}
           </div>
         </div>

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import type { Symbol } from '~core';
-import type { BlockProps } from './block.component';
+import { useSocket, type Symbol } from '~core';
+import type { BlockProps } from '../block.component';
 
 interface BlockReturn {
+  index: number;
   value: Symbol;
   isValid: boolean;
   isHighlighted: boolean;
@@ -10,8 +11,9 @@ interface BlockReturn {
 }
 
 export function useBlock(props: BlockProps): BlockReturn {
-  const { value, isHighlighted } = props;
+  const { index, value, isHighlighted } = props;
   const [isValid, setIsValid] = useState(true);
+  const { makeMove } = useSocket();
 
   function blink(): void {
     let count = 0;
@@ -32,11 +34,17 @@ export function useBlock(props: BlockProps): BlockReturn {
 
   function onPress(): void {
     if (value !== null) {
-      blink();
+      return blink();
     }
+
+    const x = index % 3;
+    const y = Math.floor(index / 3);
+
+    makeMove(x, y);
   }
 
   return {
+    index,
     value,
     isValid,
     isHighlighted,

@@ -25,6 +25,11 @@ export interface CreateRoomResponse {
   };
 }
 
+export interface MakeMoveResponse {
+  currentTurn: string;
+  table: Symbol[][];
+}
+
 export interface SocketContextData {
   socketId: string | undefined;
   roomId: string | null;
