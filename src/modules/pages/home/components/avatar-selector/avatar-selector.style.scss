@@ -1,0 +1,58 @@
+@use '~styles' as *;
+
+.avatar-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.avatar-selector__title {
+  font-size: font(size, 70);
+  font-weight: font(weight, bold);
+  color: color(blue, 40);
+  letter-spacing: 0.04em;
+
+  -webkit-text-stroke: border(width, medium) color(black, 40);
+  paint-order: stroke fill;
+}
+
+.avatar-selector__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 8.8rem);
+  gap: 1.4rem;
+}
+
+.avatar-selector__item {
+  position: relative;
+  width: 8.8rem;
+  height: 8.8rem;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: border(radius, circular);
+  cursor: pointer;
+  outline: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -0.4rem;
+    border-radius: border(radius, circular);
+    border: border(width, medium) solid color(purple, 20);
+    transition: border-color 0.15s ease;
+  }
+
+  &:focus-visible::before {
+    border-color: color(white, 80);
+  }
+}
+
+.avatar-selector__image {
+  width: 100%;
+  height: 100%;
+  border-radius: border(radius, circular);
+  border: border(width, medium) solid color(white, base);
+  object-fit: cover;
+  display: block;
+}

@@ -23,3 +23,7 @@ export function getAvatarImage(avatarName: string): string {
 
   return avatars[avatarName];
 }
+
+export function getAllAvatars(): string[] {
+  return ['dog', 'rabbit', 'cat', 'giraffe', 'lion', 'panda', 'penguin', 'fox', 'tiger'];
+}

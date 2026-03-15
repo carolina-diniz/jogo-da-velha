@@ -3,7 +3,7 @@ import doorSvg from '~assets/door.svg';
 import languageSvg from '~assets/language.svg';
 import plusSvg from '~assets/plus.svg';
 import { Modal, ModalKind, ModalPosition, type InputDialogModalProps } from '~core';
-import { Avatar, Button, NameInput } from './components';
+import { Avatar, AvatarSelector, Button, NameInput } from './components';
 import './home.style.scss';
 
 interface HomeParams {
@@ -13,10 +13,12 @@ interface HomeParams {
   selectedAvatar: string;
   placeholder: string;
   isHidden: boolean;
+  isSelectingAvatar: boolean;
   shouldShowToast: boolean;
   setPlayerName: (value: string) => void;
   setSelectedAvatar: (value: string) => void;
   setIsHidden: (value: boolean) => void;
+  setIsSelectingAvatar: (value: boolean) => void;
   onCreateRoom: () => void;
   onSubmit: () => void;
   onChangeValue: InputDialogModalProps['onChange'];
@@ -31,10 +33,12 @@ export function HomeView(params: HomeParams): JSX.Element {
     selectedAvatar,
     placeholder,
     isHidden,
+    isSelectingAvatar,
     shouldShowToast,
     setPlayerName,
     setSelectedAvatar,
     setIsHidden,
+    setIsSelectingAvatar,
     onCreateRoom,
     onSubmit,
     onChangeValue,
@@ -48,14 +52,29 @@ export function HomeView(params: HomeParams): JSX.Element {
           <h1 className="home__title">JOGO DA VELHA</h1>
           <div className="home__form">
             <div className="home__form-fields">
-              <Avatar selectedAvatar={selectedAvatar} onAvatarChange={setSelectedAvatar} />
+              <Avatar
+                selectedAvatar={selectedAvatar}
+                onEditClick={() => setIsSelectingAvatar(true)}
+              />
               <NameInput value={playerName} onChange={setPlayerName} placeholder={placeholder} />
             </div>
             <div className="home__separator"></div>
-            <div className="home__buttons">
-              <Button name="CRIAR SALA" img={plusSvg} onClick={onCreateRoom} />
-              <Button name="ENTRAR" img={doorSvg} onClick={() => setIsHidden(false)} />
-              <Button name="IDIOMA" img={languageSvg} onClick={() => showToast()} />
+            <div className="home__form-panel">
+              {isSelectingAvatar ? (
+                <AvatarSelector
+                  selectedAvatar={selectedAvatar}
+                  onSelect={(avatar) => {
+                    setSelectedAvatar(avatar);
+                    setIsSelectingAvatar(false);
+                  }}
+                />
+              ) : (
+                <div className="home__buttons">
+                  <Button name="CRIAR SALA" img={plusSvg} onClick={onCreateRoom} />
+                  <Button name="ENTRAR" img={doorSvg} onClick={() => setIsHidden(false)} />
+                  <Button name="IDIOMA" img={languageSvg} onClick={() => showToast()} />
+                </div>
+              )}
             </div>
           </div>
         </div>

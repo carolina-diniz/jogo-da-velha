@@ -1,17 +1,15 @@
 import type { JSX } from 'react';
 import pencilAssetPath from '~assets/pencil-black.svg';
 import { getAvatarImage } from '~core';
-import { useAvatar } from './avatar.hook';
 import './avatar.style.scss';
 
 interface AvatarProps {
   selectedAvatar: string;
-  onAvatarChange: (avatar: string) => void;
+  onEditClick: () => void;
 }
 
 export function Avatar(props: AvatarProps): JSX.Element {
-  const { selectedAvatar } = props;
-  const { onPress } = useAvatar();
+  const { selectedAvatar, onEditClick } = props;
 
   const avatarImage = getAvatarImage(selectedAvatar);
 
@@ -24,7 +22,7 @@ export function Avatar(props: AvatarProps): JSX.Element {
         backgroundPosition: 'center',
       }}
     >
-      <div className="avatar__btn-edit" onClick={onPress}>
+      <div className="avatar__btn-edit" onClick={onEditClick}>
         <img src={pencilAssetPath} alt="Avatar edit icon" />
       </div>
     </div>

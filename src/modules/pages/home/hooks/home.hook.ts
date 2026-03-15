@@ -8,10 +8,12 @@ export interface HomePageReturn {
   selectedAvatar: string;
   placeholder: string;
   isHidden: boolean;
+  isSelectingAvatar: boolean;
   shouldShowToast: boolean;
   setPlayerName: (value: string) => void;
   setSelectedAvatar: (value: string) => void;
   setIsHidden: (value: boolean) => void;
+  setIsSelectingAvatar: (value: boolean) => void;
   onCreateRoom: () => void;
   onSubmit: () => void;
   onChangeValue: InputDialogModalProps['onChange'];
@@ -25,6 +27,7 @@ export function useHomePage(): HomePageReturn {
   const [code, setCode] = useState<string>('');
   const [hasError, setHasError] = useState<boolean>(false);
   const [isHidden, setIsHidden] = useState<boolean>(true);
+  const [isSelectingAvatar, setIsSelectingAvatar] = useState<boolean>(false);
 
   const [shouldShowToast, setShouldShowToast] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -73,10 +76,12 @@ export function useHomePage(): HomePageReturn {
     selectedAvatar,
     placeholder,
     isHidden,
+    isSelectingAvatar,
     shouldShowToast,
     setPlayerName,
     setSelectedAvatar,
     setIsHidden,
+    setIsSelectingAvatar,
     onCreateRoom,
     onSubmit,
     onChangeValue,
