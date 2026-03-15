@@ -167,6 +167,12 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         return;
       }
 
+      if (roomId == null) {
+        console.error('Id da sala não definido');
+
+        return;
+      }
+
       console.log('Enviando jogada:', { x, y });
 
       connection
