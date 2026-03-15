@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSocket } from '~core';
 
@@ -16,6 +16,12 @@ export function useGame(): UseGameReturn {
   const [isHidden, setIsHidden] = useState(true);
   const [description, setDescription] = useState('');
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (websocket.roomId === null) {
+      navigate('/');
+    }
+  }, [websocket.roomId, navigate]);
 
   function onClickLeave(): void {
     websocket.leaveRoom();
