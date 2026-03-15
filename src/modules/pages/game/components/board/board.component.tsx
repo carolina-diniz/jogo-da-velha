@@ -3,17 +3,26 @@ import { useSocket } from '~core';
 import './board.style.scss';
 import { Block } from './components';
 
-export function Board(): JSX.Element {
-  const { board } = useSocket();
+interface BoardProps {
+  showToastModal: (text: string) => void;
+}
+
+export function Board(props: BoardProps): JSX.Element {
+  const { showToastModal } = props;
+  const { board, turn, players } = useSocket();
+
+  console.log(players);
+
+  const { name } = players.find((player) => player.id === turn) ?? {};
 
   // Example title indicating the current player's turn
-  const title = 'VEZ DE: Jogador 1';
+  const title = name !== null ? `Vez de:  ${name} ` : 'Carregando novo jogo...';
 
   return (
     <div className="board">
-      <h1 className="board__game-title">JOGO DA VELHA</h1>
+      <h1 className={'board__game-title'}>JOGO DA VELHA</h1>
       <div className="board__container">
-        <h1 className="board__title">{title}</h1>
+        <h1 className={'board__title'}>{title}</h1>
         <div className="board__wrapper">
           <div className="board__grid">
             {board.map((block, rowIndex) => (
@@ -22,6 +31,7 @@ export function Board(): JSX.Element {
                 index={rowIndex}
                 value={block.value}
                 isHighlighted={block.isHighlighted}
+                showToastModal={showToastModal}
               />
             ))}
           </div>

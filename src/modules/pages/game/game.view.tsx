@@ -19,7 +19,7 @@ export function GameView(params: GameParams): JSX.Element {
     <>
       <div className="game-page__container">
         <InfoMenu showToastModal={showToastModal} />
-        <Board />
+        <Board showToastModal={showToastModal} />
         <Button width={'20rem'} onPress={() => setIsHiddenConfirm(false)}>
           SAIR
         </Button>

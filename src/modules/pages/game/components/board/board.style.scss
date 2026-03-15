@@ -10,10 +10,6 @@
 }
 
 .board__game-title {
-  $fontAndBorderColor: color(white, 70);
-  $textStrokeColor: color(blue, 10);
-  $textStrokeSize: border(width, heavy);
-
   width: 34.4rem;
   margin-bottom: 3.1rem;
 
@@ -24,9 +20,9 @@
   line-height: 95%;
   letter-spacing: -4%;
 
-  -webkit-text-stroke: $textStrokeSize $textStrokeColor;
+  -webkit-text-stroke: border(width, heavy) color(blue, 10);
   paint-order: stroke fill;
-  filter: drop-shadow(0 0.4rem 0 $textStrokeColor);
+  filter: drop-shadow(0 0.4rem 0 color(blue, 10));
 }
 
 .board__container {
@@ -48,6 +44,10 @@
 
   -webkit-text-stroke: border(width, medium) color(black, 40);
   paint-order: stroke fill;
+
+  &.playerX {
+    color: color(red, base);
+  }
 }
 
 .board__wrapper {

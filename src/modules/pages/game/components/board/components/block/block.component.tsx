@@ -9,6 +9,7 @@ export interface BlockProps {
   index: number;
   value: Symbol;
   isHighlighted: boolean;
+  showToastModal: (text: string) => void;
 }
 
 export function Block(props: BlockProps): JSX.Element {

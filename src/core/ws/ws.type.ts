@@ -35,6 +35,11 @@ export interface MakeMoveResponse {
   players: Player[];
 }
 
+export interface ResetResponse {
+  currentTurn: string;
+  table: Symbol[][];
+}
+
 export interface SocketContextData {
   socketId: string | undefined;
   roomId: string | null;
@@ -43,7 +48,6 @@ export interface SocketContextData {
   draws: number;
   hasDraw: boolean;
   isWinner: boolean | null;
-  winnerPath: number[][] | undefined;
   connected: boolean;
   me: Player | undefined;
   isMyTurn: boolean;

@@ -11,9 +11,9 @@ interface BlockReturn {
 }
 
 export function useBlock(props: BlockProps): BlockReturn {
-  const { index, value, isHighlighted } = props;
+  const { index, value, isHighlighted, showToastModal } = props;
   const [isValid, setIsValid] = useState(true);
-  const { makeMove } = useSocket();
+  const { makeMove, isMyTurn } = useSocket();
 
   function blink(): void {
     let count = 0;
@@ -33,8 +33,18 @@ export function useBlock(props: BlockProps): BlockReturn {
   }
 
   function onPress(): void {
+    if (!isMyTurn) {
+      showToastModal('Aguarde a sua vez!');
+      blink();
+
+      return;
+    }
+
     if (value !== null) {
-      return blink();
+      showToastModal('Esta casa já está ocupada!');
+      blink();
+
+      return;
     }
 
     const x = index % 3;
