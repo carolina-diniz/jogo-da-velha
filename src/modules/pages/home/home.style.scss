@@ -13,8 +13,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 85.8rem;
-  height: 59.8rem;
+
+  width: 100%;
+  max-width: 85.8rem;
+  min-width: 28rem;
+  height: auto;
+  padding: 10.9rem 4.9rem 9.1rem 4.9rem;
+
   background-color: #5c5cef;
   border-radius: 4.2rem;
 }
@@ -24,7 +29,7 @@
   $textStrokeColor: color(blue, 10);
   $textStrokeSize: border(width, heavy);
 
-  margin-bottom: 4rem;
+  margin-bottom: 3.2rem;
 
   font-size: font(size, 120);
   font-weight: font(weight, bold);
