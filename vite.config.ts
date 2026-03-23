@@ -10,6 +10,7 @@ export default defineConfig({
       '~core': resolve(__dirname, 'src/core/index.ts'),
       '~styles': resolve(__dirname, 'src/styles'),
       '~assets': resolve(__dirname, 'src/assets'),
+      '@': resolve(__dirname, 'src'),
     },
   },
   server: {

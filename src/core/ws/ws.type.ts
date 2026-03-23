@@ -16,6 +16,12 @@ export interface GameState {
   winnerPath?: number[];
 }
 
+export interface Message {
+  id: string;
+  text: string;
+  sender: Player;
+  timestamp: number;
+}
 export type Board = Array<{ value: Symbol; isHighlighted: boolean }>;
 
 export interface CreateRoomResponse {
@@ -40,6 +46,12 @@ export interface ResetResponse {
   table: Symbol[][];
 }
 
+export interface MessageResponse {
+  message: string;
+  playerID: string;
+  createadAt: Date;
+}
+
 export interface SocketContextData {
   socketId: string | undefined;
   roomId: string | null;
@@ -52,6 +64,7 @@ export interface SocketContextData {
   me: Player | undefined;
   isMyTurn: boolean;
   board: Board;
+  messages: Message[];
   createRoom: (playerName: string, playerAvatar: string) => void;
   joinRoom: (
     roomId: string,

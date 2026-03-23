@@ -1,8 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWebSocketConnection } from './hooks';
 import { SocketContext } from './ws.context';
-import type { Board, CreateRoomResponse, MakeMoveResponse, Player, ResetResponse } from './ws.type';
+import type {
+  Board,
+  CreateRoomResponse,
+  MakeMoveResponse,
+  Message,
+  MessageResponse,
+  Player,
+  ResetResponse,
+} from './ws.type';
 
 const initialBoard: Board = [
   { value: null, isHighlighted: false },
@@ -28,7 +36,18 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
   const [draws, setDraws] = useState(0);
   const [isWinner, setIsWinner] = useState<boolean | null>(null);
   const [hasDraw, setHasDraw] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Message[]>([]);
 
+  const playersRef = useRef<Player[]>(players);
+  const connectionIdRef = useRef<string | null>(connectionId);
+
+  useEffect(() => {
+    playersRef.current = players;
+  }, [players]);
+
+  useEffect(() => {
+    connectionIdRef.current = connectionId;
+  }, [connectionId]);
   const me = players.find((p) => p.id === connectionId);
   const isMyTurn = turn === connectionId;
 
@@ -88,7 +107,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       }
 
       if (winnerId !== undefined) {
-        setIsWinner(me?.id === winnerId);
+        setIsWinner(connectionIdRef.current === winnerId);
       }
 
       if (isDrawEvent !== undefined && updatedDraws !== undefined && isDrawEvent) {
@@ -112,15 +131,50 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       }
     });
 
+    connection.on('Message', (response: MessageResponse) => {
+      try {
+        const { message, playerID } = response;
+
+        const player = players.find((rawPlayer) => {
+          if (rawPlayer.id === playerID) {
+            return rawPlayer;
+          } else {
+            return undefined;
+          }
+        });
+
+        if (!player) {
+          return;
+        }
+
+        console.log(response);
+
+        setMessages((prev) => {
+          return [
+            ...prev,
+            {
+              id: Date.now().toString(),
+              text: message,
+              sender: player,
+              timestamp: Date.now(),
+            },
+          ];
+        });
+      } catch (error) {
+        console.error('❌ Erro ao processar mensagem:', error);
+      }
+    });
+
     return () => {
       connection.off('PlayerJoined');
       connection.off('PlayerLeft');
       connection.off('GameOver');
-      connection.off('MadeMove');
       connection.off('UpdateTable');
+      connection.off('UpdatedTable');
       connection.off('Reset');
+      connection.off('Message');
     };
-  }, [connection, me]);
+  }, [connection, players]);
 
   useEffect(() => {
     if (!connection || roomId == null) return;
@@ -242,12 +296,20 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         return;
       }
 
-      connection
-        .invoke('SendMessage', message)
-        .then((response) => console.log(response))
-        .catch((err) => console.error('Erro ao enviar mensagem:', err));
+      if (roomId == null) {
+        console.error('Id da sala não definido');
+
+        return;
+      }
+
+      connection.invoke('Message', { IdRoom: roomId, message }).catch((err) => {
+        console.error('Erro ao enviar mensagem:', err);
+        if (err instanceof Error) {
+          console.error('Detalhes do erro:', err.message);
+        }
+      });
     },
-    [connection],
+    [connection, roomId],
   );
 
   return (
@@ -264,6 +326,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         me,
         isMyTurn,
         board,
+        messages,
         createRoom,
         joinRoom,
         leaveRoom,

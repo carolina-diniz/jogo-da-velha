@@ -10,6 +10,7 @@
   height: 60.1rem;
   background-color: color(purple, 10);
   border-radius: border(radius, xxxlarge);
+  margin-left: spacing(10);
 }
 
 .info-menu__title {
@@ -55,4 +56,7 @@
     width: spacing(14);
     text-align: center;
   }
+}
+.info-menu__container {
+  margin-left: spacing(15);
 }

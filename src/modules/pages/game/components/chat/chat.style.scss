@@ -1,0 +1,130 @@
+@use '~styles' as *;
+
+.chat__container-out {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing(4);
+  padding: spacing(5);
+  background-color: color(purple, 10);
+  border-radius: border(radius, xxxlarge);
+  height: 60rem;
+}
+
+.chat__title {
+  font-size: font(size, 70);
+  font-weight: font(weight, bold);
+  letter-spacing: 0.1rem;
+  color: color(blue, 40);
+
+  -webkit-text-stroke: border(width, medium) color(black, 40);
+  paint-order: stroke fill;
+}
+
+.chat__container-in {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: color(purple, 10);
+    border-radius: 1rem;
+
+    &:hover {
+      background: color(purple, 20);
+    }
+  }
+  gap: spacing(3);
+  padding: spacing(4);
+
+  width: 35rem;
+  max-width: 35rem;
+  height: 45rem;
+  max-height: 45rem;
+
+  background-color: color(purple, 50);
+  border: 2px solid color(blue, 50);
+  border-radius: border(radius, medium);
+  overflow-y: auto;
+}
+
+.button__send-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 35rem;
+  gap: spacing(2);
+  margin-top: spacing(1);
+
+  .input__send-message {
+    flex: 1;
+    background-color: color(purple, 50);
+    border: none;
+    border-radius: 0.8rem;
+    height: 4.3rem;
+    padding: 0 spacing(3);
+    color: color(white, base);
+    font-size: 1.4rem;
+    outline: none;
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  img {
+    height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+}
+
+.message {
+  &--mine {
+    align-self: flex-end;
+    border-bottom-right-radius: 0.2rem;
+    color: color(white, base);
+    border-bottom-right-radius: 4px;
+
+    .message-bubble {
+      background-color: color(purple, 10);
+      border-bottom-right-radius: 0.4rem;
+      margin-left: 2rem;
+    }
+  }
+  &--other {
+    align-self: flex-start;
+    border-bottom-left-radius: 0.2rem;
+    color: color(white, base);
+    border-bottom-left-radius: 0.4rem;
+
+    .message-bubble {
+      background-color: color(purple, 20);
+      border-bottom-left-radius: 4px;
+      margin-right: 2rem;
+    }
+  }
+}
+.message-bubble {
+  padding: 0.8rem 1.2rem;
+  border-radius: 1.2rem;
+  background-color: color(purple, 10);
+  color: white;
+
+  width: fit-content;
+
+  word-break: normal;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}

@@ -1,6 +1,6 @@
 import { useState, type JSX } from 'react';
 import { Button, Modal, ModalKind, ModalPosition } from '~core';
-import { Board, InfoMenu } from './components';
+import { Board, Chat, InfoMenu } from './components';
 import './game.style.scss';
 
 interface GameParams {
@@ -20,9 +20,14 @@ export function GameView(params: GameParams): JSX.Element {
       <div className="game-page__container">
         <InfoMenu showToastModal={showToastModal} />
         <Board showToastModal={showToastModal} />
-        <Button width={'20rem'} onPress={() => setIsHiddenConfirm(false)}>
-          SAIR
-        </Button>
+        <div className="game-page__chat-section">
+          <div className="game-page__leave-button-container">
+            <Button width={'20rem'} onPress={() => setIsHiddenConfirm(false)}>
+              SAIR
+            </Button>
+          </div>
+          <Chat></Chat>
+        </div>
       </div>
 
       <Modal
