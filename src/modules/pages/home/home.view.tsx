@@ -47,36 +47,29 @@ export function HomeView(params: HomeParams): JSX.Element {
 
   return (
     <>
-      <div className="home__wrapper">
-        <div className="home__card">
-          <h1 className="home__title">JOGO DA VELHA</h1>
-          <div className="home__form">
-            <div className="home__form-fields">
-              <Avatar
-                selectedAvatar={selectedAvatar}
-                onEditClick={() => setIsSelectingAvatar(true)}
-              />
-              <NameInput value={playerName} onChange={setPlayerName} placeholder={placeholder} />
+      <h1 className="home__title">JOGO DA VELHA</h1>
+      <div className="home__form">
+        <div className="home__form-fields">
+          <Avatar selectedAvatar={selectedAvatar} onEditClick={() => setIsSelectingAvatar(true)} />
+          <NameInput value={playerName} onChange={setPlayerName} placeholder={placeholder} />
+        </div>
+        <div className="home__separator"></div>
+        <div className="home__form-panel">
+          {isSelectingAvatar ? (
+            <AvatarSelector
+              selectedAvatar={selectedAvatar}
+              onSelect={(avatar) => {
+                setSelectedAvatar(avatar);
+                setIsSelectingAvatar(false);
+              }}
+            />
+          ) : (
+            <div className="home__buttons">
+              <Button name="CRIAR SALA" img={plusSvg} onClick={onCreateRoom} />
+              <Button name="ENTRAR" img={doorSvg} onClick={() => setIsHidden(false)} />
+              <Button name="IDIOMA" img={languageSvg} onClick={() => showToast()} />
             </div>
-            <div className="home__separator"></div>
-            <div className="home__form-panel">
-              {isSelectingAvatar ? (
-                <AvatarSelector
-                  selectedAvatar={selectedAvatar}
-                  onSelect={(avatar) => {
-                    setSelectedAvatar(avatar);
-                    setIsSelectingAvatar(false);
-                  }}
-                />
-              ) : (
-                <div className="home__buttons">
-                  <Button name="CRIAR SALA" img={plusSvg} onClick={onCreateRoom} />
-                  <Button name="ENTRAR" img={doorSvg} onClick={() => setIsHidden(false)} />
-                  <Button name="IDIOMA" img={languageSvg} onClick={() => showToast()} />
-                </div>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       </div>
       <Modal
