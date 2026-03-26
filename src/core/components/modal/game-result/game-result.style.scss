@@ -1,0 +1,199 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.game-result-modal {
+  position: relative;
+  padding: 5rem 4rem 4rem;
+  border-radius: 2rem;
+  width: 58rem;
+  max-width: 90vw;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.4s ease-out;
+  border: 0.4rem solid rgba(0, 0, 0, 0.3);
+
+  &__close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+    font-weight: bold;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.4);
+      transform: scale(1.05);
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 2rem 2rem;
+  }
+
+  &__decor {
+    position: absolute;
+    top: 1rem;
+    width: 8rem;
+    height: 8rem;
+    animation: float 3s ease-in-out infinite;
+    opacity: 0.9;
+
+    &--left {
+      left: 4rem;
+      animation-delay: 0s;
+    }
+
+    &--right {
+      right: 4rem;
+      animation-delay: 0.5s;
+    }
+  }
+
+  &__icon-container {
+    margin-top: 0;
+    animation: scaleIn 0.5s ease-out 0.2s both;
+  }
+
+  &__icon {
+    width: 15rem;
+    height: auto;
+    filter: drop-shadow(0 0.3rem 1rem rgba(0, 0, 0, 0.15));
+  }
+
+  &__title {
+    font-size: 4.8rem;
+    font-weight: 900;
+    text-align: center;
+    margin: 0.5rem 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    animation: bounceIn 0.6s ease-out 0.3s both;
+    line-height: 1.1;
+  }
+
+  &__description {
+    font-size: 1.7rem;
+    text-align: center;
+    margin: 0;
+    color: #2b1617;
+    font-weight: 600;
+    animation: fadeIn 0.8s ease-out 0.5s both;
+    opacity: 0.9;
+  }
+
+  &--win {
+    background: linear-gradient(180deg, #c5e8f0 0%, #b9e2f8 100%);
+
+    .game-result-modal__title {
+      color: #ffd34f;
+      text-shadow:
+        -3px -3px 0 #5c3a7a,
+        3px -3px 0 #5c3a7a,
+        -3px 3px 0 #5c3a7a,
+        3px 3px 0 #5c3a7a,
+        0 0 20px rgba(255, 211, 79, 0.5);
+    }
+  }
+
+  &--lose {
+    background: linear-gradient(180deg, #e8d4f0 0%, #dcc4e8 100%);
+
+    .game-result-modal__title {
+      color: #ff7eb3;
+      text-shadow:
+        -3px -3px 0 #3a1f2b,
+        3px -3px 0 #3a1f2b,
+        -3px 3px 0 #3a1f2b,
+        3px 3px 0 #3a1f2b,
+        0 0 20px rgba(255, 126, 179, 0.5);
+    }
+  }
+
+  &--draw {
+    background: linear-gradient(180deg, #f5e6d3 0%, #e8d4b8 100%);
+
+    .game-result-modal__title {
+      color: #b8935c;
+      text-shadow:
+        -3px -3px 0 #4a3628,
+        3px -3px 0 #4a3628,
+        -3px 3px 0 #4a3628,
+        3px 3px 0 #4a3628,
+        0 0 20px rgba(184, 147, 92, 0.3);
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1rem);
+  }
+}

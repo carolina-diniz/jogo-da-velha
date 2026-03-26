@@ -24,10 +24,17 @@ export type ToastModalProps = ModalBase<ModalKind.Toast> & {
   description: string;
 };
 
+export type GameResultModalProps = ModalBase<ModalKind.GameResult> & {
+  result: 'win' | 'lose' | 'draw';
+  onClose: () => void;
+  countdown: number | null;
+};
+
 export const enum ModalKind {
   InputDialog = 'INPUT-DIALOG',
   Toast = 'TOAST',
   Confirm = 'CONFIRM',
+  GameResult = 'GAME-RESULT',
 }
 
 export const enum ModalPosition {
@@ -42,4 +49,8 @@ type ModalBase<T extends ModalKind> = {
   position?: ModalPosition;
 };
 
-export type ModalData = InputDialogModalProps | ToastModalProps | ConfirmationModalProps;
+export type ModalData =
+  | InputDialogModalProps
+  | ToastModalProps
+  | ConfirmationModalProps
+  | GameResultModalProps;

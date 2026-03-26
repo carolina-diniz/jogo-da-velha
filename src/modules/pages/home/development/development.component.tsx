@@ -24,17 +24,30 @@ const developers: Array<{
   {
     name: 'José',
     description: '',
-    social: [],
+    social: [
+      { img: linkedinSvg, alt: 'LinkedIn', url: '' },
+      { img: githubSvg, alt: 'GitHub', url: '' },
+      { img: gmailSvg, alt: 'Gmail', url: 'mailto:' },
+    ],
   },
   {
     name: 'Madu',
     description: '',
-    social: [],
+    social: [
+      { img: linkedinSvg, alt: 'LinkedIn', url: '' },
+      { img: githubSvg, alt: 'GitHub', url: '' },
+      { img: gmailSvg, alt: 'Gmail', url: 'mailto:' },
+    ],
   },
   {
-    name: 'Will',
-    description: '',
-    social: [],
+    name: 'Will Gonçalves',
+    description:
+      'Estudante de Ciência da Computação e desenvolvedor front-end em formação, com foco em interfaces modernas e usabilidade. Sempre em busca de evolução e novos aprendizados na área de tecnologia.',
+    social: [
+      { img: linkedinSvg, alt: 'LinkedIn', url: 'www.linkedin.com/in/wilbsom-gs' },
+      { img: githubSvg, alt: 'GitHub', url: 'https://github.com/Wilbsomgs/Wilbsomgs' },
+      { img: gmailSvg, alt: 'Gmail', url: 'mailto: willsuporte@gmai.com' },
+    ],
   },
 ];
 

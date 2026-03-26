@@ -34,9 +34,8 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
   const [roomId, setRoomId] = useState<string | null>(null);
   const [turn, setTurn] = useState<string>('');
   const [draws, setDraws] = useState(0);
-  const [isWinner, setIsWinner] = useState<boolean | null>(null);
-  const [hasDraw, setHasDraw] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [gameResult, setGameResult] = useState<'win' | 'lose' | 'draw' | null>(null);
 
   const playersRef = useRef<Player[]>(players);
   const connectionIdRef = useRef<string | null>(connectionId);
@@ -91,8 +90,8 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         players: updatedPlayers,
       } = response;
 
-      if (currentTurn !== undefined) {
-        setTurn(currentTurn);
+      if (updatedPlayers !== undefined) {
+        setPlayers(updatedPlayers);
       }
 
       if (table !== undefined) {
@@ -106,19 +105,20 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         );
       }
 
-      if (winnerId !== undefined) {
-        setIsWinner(connectionIdRef.current === winnerId);
-      }
-
       if (isDrawEvent !== undefined && updatedDraws !== undefined && isDrawEvent) {
-        setHasDraw(true);
         setDraws(updatedDraws);
-
+        setGameResult('draw');
         return;
       }
 
-      if (updatedPlayers !== undefined) {
-        setPlayers(updatedPlayers);
+      if (winnerId !== undefined && winnerId !== null && winnerId !== '') {
+        const isCurrentPlayerWinner = connectionIdRef.current === winnerId;
+        setGameResult(isCurrentPlayerWinner ? 'win' : 'lose');
+        return;
+      }
+
+      if (currentTurn !== undefined) {
+        setTurn(currentTurn);
       }
     });
 
@@ -128,6 +128,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       if (currentTurn !== undefined && table !== undefined) {
         setTurn(currentTurn);
         setBoard(initialBoard);
+        setGameResult(null);
       }
     });
 
@@ -264,13 +265,17 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         return;
       }
 
+      if (gameResult !== null) {
+        return;
+      }
+
       console.log('Enviando jogada:', { x, y });
 
       connection
         .invoke<MakeMoveResponse>('MakeMove', { IdRoom: roomId, block: { x, y } })
         .catch((err) => console.error('Erro ao fazer jogada:', err));
     },
-    [connection, roomId],
+    [connection, roomId, gameResult],
   );
 
   const leaveRoom = useCallback(() => {
@@ -320,18 +325,18 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         players,
         turn,
         draws,
-        hasDraw,
-        isWinner,
         connected: isConnected,
         me,
         isMyTurn,
         board,
         messages,
+        gameResult,
         createRoom,
         joinRoom,
         leaveRoom,
         makeMove,
         sendMessage,
+        setGameResult,
       }}
     >
       {children}

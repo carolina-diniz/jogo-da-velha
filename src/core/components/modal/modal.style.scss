@@ -28,6 +28,14 @@
   background-color: color(purple, 60);
   border: solid 0.4rem color(purple, 20);
   border-radius: border(radius, large);
+
+  &--no-style {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    gap: 0;
+    width: auto;
+  }
 }
 
 .modal__center {
