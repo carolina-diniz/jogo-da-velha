@@ -5,6 +5,8 @@ import { useSocket } from '~core';
 interface UseGameReturn {
   isHidden: boolean;
   description: string;
+  playerName?: string;
+  action?: 'joined' | 'left';
   showToastModal: (text: string) => void;
   onClickLeave: () => void;
 }
@@ -15,6 +17,8 @@ export function useGame(): UseGameReturn {
 
   const [isHidden, setIsHidden] = useState(true);
   const [description, setDescription] = useState('');
+  const [playerName, setPlayerName] = useState<string | undefined>(undefined);
+  const [action, setAction] = useState<'joined' | 'left' | undefined>(undefined);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -22,6 +26,13 @@ export function useGame(): UseGameReturn {
       navigate('/');
     }
   }, [websocket.roomId, navigate]);
+
+  useEffect(() => {
+    if (websocket.playerNotification) {
+      const { player, type } = websocket.playerNotification;
+      showToastModalWithPlayer(player.name, type);
+    }
+  }, [websocket.playerNotification]);
 
   function onClickLeave(): void {
     websocket.leaveRoom();
@@ -34,6 +45,23 @@ export function useGame(): UseGameReturn {
     }
 
     setDescription(text);
+    setPlayerName(undefined);
+    setAction(undefined);
+    setIsHidden(false);
+
+    timeoutRef.current = setTimeout(() => {
+      setIsHidden(true);
+    }, 3000);
+  }
+
+  function showToastModalWithPlayer(name: string, actionType: 'joined' | 'left'): void {
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    setPlayerName(name);
+    setAction(actionType);
+    setDescription('');
     setIsHidden(false);
 
     timeoutRef.current = setTimeout(() => {
@@ -44,6 +72,8 @@ export function useGame(): UseGameReturn {
   return {
     isHidden,
     description,
+    playerName,
+    action,
     showToastModal,
     onClickLeave,
   };

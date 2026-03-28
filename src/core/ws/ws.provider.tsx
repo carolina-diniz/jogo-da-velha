@@ -9,6 +9,7 @@ import type {
   Message,
   MessageResponse,
   Player,
+  PlayerNotification,
   ResetResponse,
 } from './ws.type';
 
@@ -36,6 +37,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
   const [draws, setDraws] = useState(0);
   const [messages, setMessages] = useState<Message[]>([]);
   const [gameResult, setGameResult] = useState<'win' | 'lose' | 'draw' | null>(null);
+  const [playerNotification, setPlayerNotification] = useState<PlayerNotification | null>(null);
 
   const playersRef = useRef<Player[]>(players);
   const connectionIdRef = useRef<string | null>(connectionId);
@@ -60,12 +62,20 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         console.log('PlayerJoined event received:', player);
         if (prev.find((p) => p.id === player.id)) return prev;
 
+        if (player.id !== connectionIdRef.current) {
+          setPlayerNotification({ player, type: 'joined' });
+        }
+
         return [...prev, player];
       });
     });
 
     connection.on('PlayerLeft', (response: { player: Player }) => {
       const { player } = response;
+
+      if (player.id !== connectionIdRef.current) {
+        setPlayerNotification({ player, type: 'left' });
+      }
 
       setPlayers((prev) => prev.filter((p) => p.id !== player.id));
     });
@@ -292,6 +302,15 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       .invoke('LeaveRoom', roomId)
       .then(() => {
         console.log('Saiu da sala com sucesso');
+
+        setRoomId(null);
+        setPlayers([]);
+        setBoard(initialBoard);
+        setTurn('');
+        setDraws(0);
+        setMessages([]);
+        setGameResult(null);
+        setPlayerNotification(null);
       })
       .catch((err) => console.error('Erro ao sair da sala:', err));
   }, [connection, roomId]);
@@ -334,6 +353,7 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
         board,
         messages,
         gameResult,
+        playerNotification,
         createRoom,
         joinRoom,
         leaveRoom,

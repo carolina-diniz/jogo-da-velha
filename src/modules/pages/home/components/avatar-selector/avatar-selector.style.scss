@@ -23,6 +23,19 @@
   gap: 1.4rem;
 }
 
+@media (max-width: 48rem) {
+  .avatar-selector__grid {
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+  }
+
+  .avatar-selector__item {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+}
+
 .avatar-selector__item {
   position: relative;
   width: 8.8rem;

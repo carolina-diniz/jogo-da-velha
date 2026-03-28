@@ -52,6 +52,11 @@ export interface MessageResponse {
   createadAt: Date;
 }
 
+export interface PlayerNotification {
+  player: Player;
+  type: 'joined' | 'left';
+}
+
 export interface SocketContextData {
   socketId: string | undefined;
   roomId: string | null;
@@ -64,6 +69,7 @@ export interface SocketContextData {
   board: Board;
   messages: Message[];
   gameResult: 'win' | 'lose' | 'draw' | null;
+  playerNotification: PlayerNotification | null;
   createRoom: (playerName: string, playerAvatar: string) => void;
   joinRoom: (
     roomId: string,

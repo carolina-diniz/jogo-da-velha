@@ -4,19 +4,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: spacing(3);
-  height: 100%;
+  justify-content: flex-start;
+  gap: spacing(2);
 }
 
 .board__game-title {
-  width: 34.4rem;
-  margin-bottom: 3.1rem;
+  width: 100%;
+  max-width: 34.4rem;
+  min-height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-align: center;
 
-  font-size: font(size, 120);
+  font-size: clamp(3.2rem, 4.5vw, 5.6rem);
   font-weight: font(weight, bold);
   color: color(yellow, base);
-  text-align: center;
   line-height: 95%;
   letter-spacing: -4%;
 
@@ -34,6 +38,8 @@
   padding: spacing(5) spacing(5) spacing(8);
   background-color: color(purple, 10);
   border-radius: border(radius, xxxlarge);
+  flex: 1;
+  min-height: 0;
 }
 
 .board__title {
@@ -52,9 +58,8 @@
 }
 
 .board__wrapper {
-  flex: 1;
   aspect-ratio: 1;
-  width: calc(54rem - spacing(5) * 2);
+  width: clamp(22rem, min(32vw, calc(100vh - 27rem)), 50rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,4 +76,20 @@
   gap: spacing(1);
   width: 100%;
   height: 100%;
+}
+
+@media (max-width: 48rem) {
+  .board__game-title {
+    min-height: unset;
+    padding: spacing(3) 0 spacing(2);
+    font-size: clamp(3.2rem, 8vw, 5.6rem);
+  }
+
+  .board__container {
+    flex: none;
+  }
+
+  .board__wrapper {
+    width: min(78vw, 40rem);
+  }
 }

@@ -1,12 +1,19 @@
+@use '~styles' as *;
+
+.game-page__wrapper {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+}
+
 .game-page__container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
-  gap: 10rem;
-  height: 100vh;
-  padding: 2rem;
+  gap: clamp(1.6rem, 2vw, 4rem);
+  padding: 2rem clamp(0.8rem, 1.5vw, 2rem) 5rem;
 
   cursor: default;
 }
@@ -15,7 +22,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  width: 37rem;
+  flex-shrink: 1;
+  min-width: 24rem;
+  gap: spacing(2);
 }
 
 .game-page__leave-button-container {
@@ -23,5 +33,112 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 10.7rem;
+  min-height: 12rem;
+  flex-shrink: 0;
+}
+
+.game-mobile-burger,
+.game-mobile-chat-fab,
+.game-mobile-backdrop,
+.game-page__mobile-code {
+  display: none;
+}
+
+@media (max-width: 48rem) {
+  .game-page__mobile-code {
+    display: block;
+    width: 100%;
+    max-width: 40rem;
+
+    .room-code__title {
+      display: none;
+    }
+  }
+
+  .game-mobile-burger {
+    display: flex;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 4.4rem;
+    height: 4.4rem;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    background-color: color(purple, 50);
+    border: border(width, light) solid color(purple, 20);
+    border-radius: border(radius, large);
+    cursor: pointer;
+  }
+
+  .game-mobile-chat-fab {
+    display: flex;
+    position: fixed;
+    bottom: 7rem;
+    right: 2rem;
+    width: 5.6rem;
+    height: 5.6rem;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    background-color: color(purple, 10);
+    border: none;
+    border-radius: border(radius, circular);
+    cursor: pointer;
+    box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.4);
+  }
+
+  .game-mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+  }
+
+  .game-page__container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1.6rem 6rem;
+    gap: spacing(3);
+  }
+
+  .game-page__chat-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-width: unset;
+    height: min(72dvh, 65rem);
+    z-index: 300;
+    flex-direction: column;
+    background-color: color(blue, 20);
+    border-radius: spacing(8) spacing(8) 0 0;
+    padding: spacing(5) spacing(4) spacing(5);
+    gap: spacing(3);
+    transform: translateY(110%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &::before {
+      content: '';
+      display: block;
+      width: 4rem;
+      height: 0.4rem;
+      background-color: color(white, 20);
+      border-radius: border(radius, circular);
+      margin: 0 auto spacing(3);
+      flex-shrink: 0;
+    }
+
+    &.is-open {
+      transform: translateY(0);
+    }
+  }
+
+  .game-page__leave-button-container {
+    display: none;
+  }
 }

@@ -1,16 +1,12 @@
 @use '~styles' as *;
 
-.info-menu {
+.info-menu__container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: spacing(5);
-  padding: spacing(5) spacing(5) spacing(10);
-  width: fit-content;
-  height: 60.1rem;
-  background-color: color(purple, 10);
-  border-radius: border(radius, xxxlarge);
-  margin-left: spacing(10);
+  width: 37rem;
+  flex-shrink: 1;
+  min-width: 24rem;
+  gap: spacing(2);
 }
 
 .info-menu__title {
@@ -23,18 +19,83 @@
   paint-order: stroke fill;
 }
 
+.info-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.4rem, 1.5vh, 2rem);
+  padding: spacing(5);
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background-color: color(purple, 10);
+  border-radius: border(radius, xxxlarge);
+
+  .button {
+    width: 100%;
+    flex-shrink: 0;
+  }
+}
+
 .info-menu__box {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: fit-content;
-  height: 23.2rem;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  flex-shrink: 0;
   gap: spacing(4);
   padding: spacing(8) spacing(2) spacing(5);
 
   background-color: color(purple, 50);
   border-radius: border(radius, medium);
   border: solid border(width, light) color(purple, 20);
+}
+
+@media (max-width: 48rem) {
+  .info-menu__container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(34rem, 88vw);
+    min-width: unset;
+    height: 100dvh;
+    z-index: 300;
+    overflow-y: auto;
+    background-color: color(blue, 20);
+    box-shadow: -0.4rem 0 3rem rgba(0, 0, 0, 0.5);
+    padding: spacing(5);
+    gap: spacing(3);
+    transform: translateX(110%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.is-open {
+      transform: translateX(0);
+    }
+
+    .room-code__content {
+      display: none;
+    }
+  }
+
+  .info-menu {
+    flex: none;
+  }
+}
+
+.info-menu__mobile-leave {
+  display: none;
+}
+
+@media (max-width: 48rem) {
+  .info-menu__mobile-leave {
+    display: block;
+    width: 100%;
+    margin-top: auto;
+    padding-top: spacing(5);
+    flex-shrink: 0;
+  }
 }
 
 .info-menu__draw {
@@ -49,14 +110,13 @@
   color: color(white, base);
 
   p {
-    width: calc(15rem + spacing(8) + spacing(2) * 2);
+    flex: 1;
+    min-width: 0;
   }
 
   span {
-    width: spacing(14);
+    flex-shrink: 0;
+    width: clamp(3.2rem, 6vw, spacing(14));
     text-align: center;
   }
-}
-.info-menu__container {
-  margin-left: spacing(15);
 }

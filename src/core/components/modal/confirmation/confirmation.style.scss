@@ -2,3 +2,15 @@
   display: flex;
   gap: 4.6rem;
 }
+
+@media (max-width: 48rem) {
+  .confirmation-modal__buttons {
+    flex-direction: column;
+    gap: 1.6rem;
+    width: 100%;
+
+    .button {
+      width: 100%;
+    }
+  }
+}

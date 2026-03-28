@@ -22,6 +22,8 @@ export type InputDialogModalProps = ModalBase<ModalKind.InputDialog> & {
 
 export type ToastModalProps = ModalBase<ModalKind.Toast> & {
   description: string;
+  playerName?: string;
+  action?: 'joined' | 'left';
 };
 
 export type GameResultModalProps = ModalBase<ModalKind.GameResult> & {
