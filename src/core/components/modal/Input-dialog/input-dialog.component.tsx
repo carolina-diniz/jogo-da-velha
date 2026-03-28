@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { useLayoutEffect, useRef, type JSX } from 'react';
 import closeIcon from '~assets/icons/close.svg';
 import { Button } from '../../button';
 import type { InputDialogModalProps } from '../modal.type';
@@ -15,7 +15,16 @@ export function InputDialogModal(props: InputDialogModalProps): JSX.Element {
     onChange,
     onSubmit,
     setIsHidden,
+    isHidden,
   } = props;
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useLayoutEffect(() => {
+    if (!isHidden && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isHidden]);
 
   return (
     <>
@@ -25,6 +34,7 @@ export function InputDialogModal(props: InputDialogModalProps): JSX.Element {
       <h1 className="modal__title">{title}</h1>
       {description !== undefined && <p className="modal__description">{description}</p>}
       <input
+        ref={inputRef}
         type="text"
         placeholder={placeholder}
         value={value}

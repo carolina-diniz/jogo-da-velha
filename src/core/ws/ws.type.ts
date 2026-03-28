@@ -34,8 +34,8 @@ export interface CreateRoomResponse {
 export interface MakeMoveResponse {
   currentTurn: string;
   table: Symbol[][];
-  winner: string;
-  winnerMoves: number[][];
+  winner: string | null;
+  winnerMoves: number[][] | null;
   isDrawEvent: boolean;
   draws: number;
   players: Player[];
@@ -58,13 +58,12 @@ export interface SocketContextData {
   players: Player[];
   turn: string;
   draws: number;
-  hasDraw: boolean;
-  isWinner: boolean | null;
   connected: boolean;
   me: Player | undefined;
   isMyTurn: boolean;
   board: Board;
   messages: Message[];
+  gameResult: 'win' | 'lose' | 'draw' | null;
   createRoom: (playerName: string, playerAvatar: string) => void;
   joinRoom: (
     roomId: string,
@@ -75,4 +74,5 @@ export interface SocketContextData {
   leaveRoom: () => void;
   makeMove: (x: number, y: number) => void;
   sendMessage: (text: string) => void;
+  setGameResult: (result: 'win' | 'lose' | 'draw' | null) => void;
 }

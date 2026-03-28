@@ -5,18 +5,23 @@ import { Block } from './components';
 
 interface BoardProps {
   showToastModal: (text: string) => void;
+  countdown: number | null;
 }
 
 export function Board(props: BoardProps): JSX.Element {
-  const { showToastModal } = props;
+  const { showToastModal, countdown } = props;
   const { board, turn, players } = useSocket();
 
   console.log(players);
 
   const { name } = players.find((player) => player.id === turn) ?? {};
 
-  // Example title indicating the current player's turn
-  const title = name !== null ? `Vez de:  ${name} ` : 'Carregando novo jogo...';
+  const title =
+    countdown !== null
+      ? `Reiniciando em: ${countdown.toString().padStart(2, '0')}s`
+      : name !== null
+        ? `Vez de:  ${name} `
+        : 'Carregando novo jogo...';
 
   return (
     <div className="board">
