@@ -11,6 +11,19 @@
   box-shadow: 0 0 0 border(width, medium) color(purple, 20);
 }
 
+@media (max-width: 48rem) {
+  .avatar__container {
+    width: 14rem;
+    height: 14rem;
+  }
+
+  .avatar__btn-edit {
+    width: spacing(8);
+    height: spacing(8);
+    bottom: 0.8rem;
+  }
+}
+
 .avatar__btn-edit {
   position: absolute;
   width: spacing(10);

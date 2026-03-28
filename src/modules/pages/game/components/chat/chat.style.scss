@@ -8,7 +8,16 @@
   padding: spacing(5);
   background-color: color(purple, 10);
   border-radius: border(radius, xxxlarge);
-  height: 60rem;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 48rem) {
+  .chat__container-out {
+    flex: 1;
+    min-height: 0;
+  }
 }
 
 .chat__title {
@@ -47,15 +56,13 @@
   gap: spacing(3);
   padding: spacing(4);
 
-  width: 35rem;
-  max-width: 35rem;
-  height: 45rem;
-  max-height: 45rem;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
 
   background-color: color(purple, 50);
   border: 2px solid color(blue, 50);
   border-radius: border(radius, medium);
-  overflow-y: auto;
 }
 
 .button__send-message {
@@ -63,7 +70,7 @@
   align-items: center;
   justify-content: space-between;
 
-  width: 35rem;
+  width: 100%;
   gap: spacing(2);
   margin-top: spacing(1);
 
@@ -82,10 +89,21 @@
     }
   }
 
+  button {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4.3rem;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
   img {
     height: 2.5rem;
     width: 2.5rem;
-    cursor: pointer;
     transition: transform 0.2s;
   }
 }

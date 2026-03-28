@@ -26,7 +26,7 @@
 }
 
 .input-dialog__input {
-  width: 40rem;
+  width: min(40rem, 100%);
   height: input(1);
   background-color: color(blue, 70);
   border-radius: border(radius, large);

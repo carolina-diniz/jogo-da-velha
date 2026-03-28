@@ -292,6 +292,14 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       .invoke('LeaveRoom', roomId)
       .then(() => {
         console.log('Saiu da sala com sucesso');
+
+        setRoomId(null);
+        setPlayers([]);
+        setBoard(initialBoard);
+        setTurn('');
+        setDraws(0);
+        setMessages([]);
+        setGameResult(null);
       })
       .catch((err) => console.error('Erro ao sair da sala:', err));
   }, [connection, roomId]);

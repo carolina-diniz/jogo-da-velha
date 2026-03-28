@@ -6,15 +6,17 @@ import './info-menu.style.scss';
 
 interface InfoMenuParams {
   showToastModal: (text: string) => void;
+  isMobileOpen?: boolean;
+  onLeave?: () => void;
 }
 
 export function InfoMenu(params: InfoMenuParams): JSX.Element {
-  const { showToastModal } = params;
+  const { showToastModal, isMobileOpen, onLeave } = params;
   const { players, draws, turn, roomId } = useSocket();
 
   return (
     <>
-      <div className="info-menu__container">
+      <div className={`info-menu__container${isMobileOpen === true ? ' is-open' : ''}`}>
         <RoomCode code={roomId} showToastModal={showToastModal} />
         <div className="info-menu">
           <p className="info-menu__title">JOGADORES {players.length}/2</p>
@@ -37,6 +39,13 @@ export function InfoMenu(params: InfoMenuParams): JSX.Element {
           <Button onPress={() => showToastModal('Em breve...')}>TEMAS</Button>
           <Button onPress={() => showToastModal('Em breve...')}>IDIOMAS</Button>
         </div>
+        {onLeave && (
+          <div className="info-menu__mobile-leave">
+            <Button width="100%" onPress={onLeave}>
+              SAIR
+            </Button>
+          </div>
+        )}
       </div>
     </>
   );

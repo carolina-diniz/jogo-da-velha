@@ -12,6 +12,12 @@
   font-size: font(size, 60);
 }
 
+@media (max-width: 48rem) {
+  .userName {
+    width: 100%;
+  }
+}
+
 input::placeholder {
   font-size: font(size, 60);
   color: color(white, 50);

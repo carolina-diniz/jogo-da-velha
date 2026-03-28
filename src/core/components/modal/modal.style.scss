@@ -60,6 +60,12 @@
   paint-order: stroke fill;
 }
 
+@media (max-width: 48rem) {
+  .modal__base {
+    padding: 2.4rem 2rem;
+  }
+}
+
 .modal__description {
   font-size: font(size, 60);
   color: color(blue, 60);

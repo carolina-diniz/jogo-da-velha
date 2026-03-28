@@ -88,6 +88,45 @@
   gap: 1.6rem;
 }
 
+@media (max-width: 48rem) {
+  .home__secondary-navbar {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .home__secondary-display {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: spacing(4) spacing(3);
+  }
+
+  .home__secondary-buttons {
+    height: auto;
+    width: 100%;
+  }
+
+  .home__secondary-button {
+    width: 100%;
+  }
+
+  .home__secondary-details {
+    width: 100%;
+    height: auto;
+    padding: spacing(4) spacing(3);
+  }
+
+  .home__secondary-description {
+    width: 100%;
+    height: auto;
+  }
+
+  .home__secondary-title,
+  .home__secondary-social {
+    width: 100%;
+  }
+}
+
 .home__secondary-icon {
   height: 3rem;
   width: auto;

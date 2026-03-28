@@ -13,8 +13,17 @@
 }
 
 .button__container-out {
+  appearance: none;
+  background: none;
+  padding: 0;
+  font: inherit;
   border-radius: 1000rem;
   border: solid 0.4rem color(blue, 50);
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button__label {
@@ -30,6 +39,13 @@
   paint-order: stroke fill;
   width: 13.8rem;
   text-align: center;
+}
+
+@media (max-width: 48rem) {
+  .button__container-out,
+  .button__container {
+    width: min(100%, 26rem);
+  }
 }
 
 .button__img-container {

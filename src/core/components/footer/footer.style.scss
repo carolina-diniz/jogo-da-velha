@@ -9,7 +9,13 @@
   align-items: center;
   color: color(white, 30);
   transform: translateX(-50%);
-  z-index: -1;
+  z-index: 0;
+}
+
+@media (max-width: 48rem) {
+  .footer__content {
+    display: none;
+  }
 }
 
 .footer__logo {

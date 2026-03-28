@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
-import FireworksSvg from '../../../../assets/results/fireworks.svg';
-import SadSvg from '../../../../assets/results/sad.svg';
-import TrophySvg from '../../../../assets/results/trophy.svg';
+import fireworksSvg from '~assets/results/fireworks.svg';
+import sadSvg from '~assets/results/sad.svg';
+import trophySvg from '~assets/results/trophy.svg';
 import type { GameResultModalProps } from '../modal.type';
 import './game-result.style.scss';
 
@@ -9,14 +9,14 @@ const RESULT_CONFIG = {
   win: {
     title: 'VITÓRIA!!!',
     description: 'Próxima partida começará em breve...',
-    icon: TrophySvg,
-    decorIcon: FireworksSvg,
+    icon: trophySvg,
+    decorIcon: fireworksSvg,
     className: 'game-result-modal--win',
   },
   lose: {
     title: 'DERROTA!!!',
     description: 'Próxima partida começará em breve...',
-    icon: SadSvg,
+    icon: sadSvg,
     decorIcon: null,
     className: 'game-result-modal--lose',
   },
@@ -45,7 +45,7 @@ export function GameResultModal(props: GameResultModalProps): JSX.Element {
       </button>
 
       <div className="game-result-modal__content">
-        {config.decorIcon && (
+        {config.decorIcon !== null && (
           <>
             <img
               src={config.decorIcon}
@@ -60,7 +60,7 @@ export function GameResultModal(props: GameResultModalProps): JSX.Element {
           </>
         )}
 
-        {config.icon && (
+        {config.icon !== null && (
           <div className="game-result-modal__icon-container">
             <img src={config.icon} alt={config.title} className="game-result-modal__icon" />
           </div>

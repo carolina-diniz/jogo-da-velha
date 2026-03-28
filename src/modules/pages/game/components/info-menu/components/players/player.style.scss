@@ -3,17 +3,22 @@
 .player__container {
   display: flex;
   flex-direction: row;
-  width: fit-content;
-  height: spacing(11);
+  width: 100%;
+  min-height: spacing(9);
   justify-content: center;
   align-items: center;
   gap: spacing(2);
   padding: spacing(2);
   border-radius: border(radius, medium);
   background-color: color(blue, 30);
+  border-left: 0.4rem solid transparent;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
 
   &.selected {
     background-color: color(purple, 30);
+    border-left-color: color(blue, 40);
 
     .player__name {
       color: color(blue, 20);
@@ -22,8 +27,9 @@
 }
 
 .player__avatar {
-  width: calc(spacing(8) + border(width, light) * 2);
-  height: calc(spacing(8) + border(width, light) * 2);
+  flex-shrink: 0;
+  width: clamp(2.4rem, 3.5vw, 3.6rem);
+  height: clamp(2.4rem, 3.5vw, 3.6rem);
   background-color: color(red, base);
   border-radius: border(radius, circular);
   border: solid border(width, light) color(white, base);
@@ -38,8 +44,9 @@
 
 .player__name {
   display: block;
-  width: 14.5rem;
-  font-size: font(size, 60);
+  flex: 1;
+  min-width: 0;
+  font-size: clamp(1.2rem, 1.4vw, font(size, 60));
   font-weight: font(weight, semi-bold);
   color: color(white, 90);
 
@@ -49,9 +56,10 @@
 }
 
 .player__wins-pill {
+  flex-shrink: 0;
   display: flex;
-  width: spacing(14);
-  height: spacing(8);
+  width: clamp(3.2rem, 4vw, spacing(14));
+  height: clamp(2.4rem, 3vw, spacing(8));
   justify-content: center;
   align-items: center;
   border-radius: border(radius, circular);
@@ -59,7 +67,7 @@
 }
 
 .player__wins-count {
-  font-size: font(size, 60);
+  font-size: clamp(1.2rem, 1.4vw, font(size, 60));
   font-weight: font(weight, semi-bold);
   color: color(white, base);
 }
