@@ -108,12 +108,15 @@ export function SocketProvider(props: { children: React.ReactNode }): React.Reac
       if (isDrawEvent !== undefined && updatedDraws !== undefined && isDrawEvent) {
         setDraws(updatedDraws);
         setGameResult('draw');
+
         return;
       }
 
       if (winnerId !== undefined && winnerId !== null && winnerId !== '') {
         const isCurrentPlayerWinner = connectionIdRef.current === winnerId;
+
         setGameResult(isCurrentPlayerWinner ? 'win' : 'lose');
+
         return;
       }
 

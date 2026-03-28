@@ -7,7 +7,7 @@ import { useHomePage } from './hooks/home.hook';
 
 export function HomePage(): JSX.Element {
   const homePageParams = useHomePage();
-  const [showDevelopment, setShowDevelopment] = useState(false);
+  const [shouldShowDevelopment, setShouldShowDevelopment] = useState(false);
 
   return (
     <>
@@ -15,13 +15,13 @@ export function HomePage(): JSX.Element {
 
       <div className="home__wrapper">
         <div className="home__card">
-          {showDevelopment ? (
-            <Development onBack={() => setShowDevelopment(false)} />
+          {shouldShowDevelopment ? (
+            <Development onBack={() => setShouldShowDevelopment(false)} />
           ) : (
             <HomeView {...homePageParams} />
           )}
           <div className="home__footer">
-            <span onClick={() => setShowDevelopment(true)} style={{ cursor: 'pointer' }}>
+            <span onClick={() => setShouldShowDevelopment(true)} style={{ cursor: 'pointer' }}>
               Desenvolvedores
             </span>
           </div>

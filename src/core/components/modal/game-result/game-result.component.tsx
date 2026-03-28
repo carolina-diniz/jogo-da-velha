@@ -32,10 +32,11 @@ const RESULT_CONFIG = {
 export function GameResultModal(props: GameResultModalProps): JSX.Element {
   const { result, onClose, countdown } = props;
   const config = RESULT_CONFIG[result];
-  
-  const description = countdown !== null 
-    ? `Reiniciando em ${countdown.toString().padStart(2, '0')}s...`
-    : config.description;
+
+  const description =
+    countdown !== null
+      ? `Reiniciando em ${countdown.toString().padStart(2, '0')}s...`
+      : config.description;
 
   return (
     <div className={`game-result-modal ${config.className}`}>
@@ -66,7 +67,12 @@ export function GameResultModal(props: GameResultModalProps): JSX.Element {
         )}
 
         <h1 className="game-result-modal__title">{config.title}</h1>
-        <p className="game-result-modal__description" style={{ fontVariantNumeric: 'tabular-nums' }}>{description}</p>
+        <p
+          className="game-result-modal__description"
+          style={{ fontVariantNumeric: 'tabular-nums' }}
+        >
+          {description}
+        </p>
       </div>
     </div>
   );

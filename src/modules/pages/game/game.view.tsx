@@ -22,13 +22,15 @@ export function GameView(params: GameParams): JSX.Element {
     if (gameResult !== null) {
       setIsResultModalVisible(true);
       setCountdown(10);
-      
+
       const interval = setInterval(() => {
         setCountdown((prev) => {
           if (prev === null || prev <= 0) {
             clearInterval(interval);
+
             return 0;
           }
+
           return prev - 1;
         });
       }, 1000);

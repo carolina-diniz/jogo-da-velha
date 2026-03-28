@@ -23,28 +23,34 @@ const developers: Array<{
   },
   {
     name: 'José',
-    description: '',
+    description:
+      'Sou estudante de Sistemas de Informação na UFRPE e pretendo me tornar um programador de jogos, sistemas embarcados e simulações no futuro.\n\n Gostaria muito de contribuir para a comunidade de software livre, como o Linux ou algum de seus programas. Durante o meu tempo livre, aprecio séries e filmes de ficção científica, drama, romance e ação, além de apreciar esportes como futebol e skate.\n Sonho em um dia construir uma família onde só será permitido o uso de Linux, brincadeira, hahah.',
     social: [
-      { img: linkedinSvg, alt: 'LinkedIn', url: '' },
-      { img: githubSvg, alt: 'GitHub', url: '' },
-      { img: gmailSvg, alt: 'Gmail', url: 'mailto:' },
+      {
+        img: linkedinSvg,
+        alt: 'LinkedIn',
+        url: 'https://www.linkedin.com/in/jos%C3%A9-alberto-martins-gomes-da-silva/',
+      },
+      { img: githubSvg, alt: 'GitHub', url: 'www.github.com/josealbertoraios13' },
+      { img: gmailSvg, alt: 'Gmail', url: 'mailto: Albertofreconvick@gmail.com' },
     ],
   },
   {
     name: 'Madu',
-    description: '',
+    description:
+      'Sou estudante de Design e Ciência da Computação que almeja unir as duas graduações para criar aplicações focadas nas necessidades do usuário e na inovação.\n\nAté o momento, trabalhei com design de posts para mídias sociais utilizando Canva e Photoshop, criação de identidades visuais com Illustrator e, nas horas vagas, crio programas para diversão e aprendizado, principalmente com Java e React.',
     social: [
-      { img: linkedinSvg, alt: 'LinkedIn', url: '' },
-      { img: githubSvg, alt: 'GitHub', url: '' },
-      { img: gmailSvg, alt: 'Gmail', url: 'mailto:' },
+      { img: linkedinSvg, alt: 'LinkedIn', url: 'https://www.linkedin.com/in/madufarias/' },
+      { img: githubSvg, alt: 'GitHub', url: 'https://github.com/MaduFarias' },
+      { img: gmailSvg, alt: 'Gmail', url: 'mailto: madufarias47@gmail.com' },
     ],
   },
   {
     name: 'Will Gonçalves',
     description:
-      'Estudante de Ciência da Computação e desenvolvedor front-end em formação, com foco em interfaces modernas e usabilidade. Sempre em busca de evolução e novos aprendizados na área de tecnologia.',
+      'Estudante de Ciência da Computação e desenvolvedor front-end em formação, apaixonado por criar interfaces modernas e intuitivas.\n\nTenho foco em usabilidade e experiência do usuário, buscando constantemente aprimorar minhas habilidades e explorar novas tecnologias.\n\nMotivado pela evolução contínua, estou sempre em busca de desafios que impulsionem meu crescimento na área de desenvolvimento e inovação digital.',
     social: [
-      { img: linkedinSvg, alt: 'LinkedIn', url: 'www.linkedin.com/in/wilbsom-gs' },
+      { img: linkedinSvg, alt: 'LinkedIn', url: 'https://www.linkedin.com/in/wilbsom-gs/' },
       { img: githubSvg, alt: 'GitHub', url: 'https://github.com/Wilbsomgs/Wilbsomgs' },
       { img: gmailSvg, alt: 'Gmail', url: 'mailto: willsuporte@gmai.com' },
     ],
